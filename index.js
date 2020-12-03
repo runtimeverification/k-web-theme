@@ -8,7 +8,6 @@ const url = require("url");
 const Prism = require("prismjs");
 const getPort = require("get-port");
 const express = require("express");
-const path = require("path");
 const SitemapGenerator = require("sitemap-generator");
 const loadLanguages = require("prismjs/components/");
 loadLanguages();
@@ -256,7 +255,7 @@ async function buildSitemap({
       fs.writeFileSync(filePath, newContent);
     });
 
-    console.log("* sitemaps created");
+    console.log("* sitemaps created at", sitemapPath);
     server.close();
   });
 
