@@ -7,8 +7,7 @@
     "build": "npm run build-icons && npm run build-css && npm run build-js",
     "build-icons": "node build-icons.js",
     "build-css": "parcel build --no-source-maps --no-autoinstall --bundle-node-modules -d ./public_content/assets/css --public-url /assets/css ./static_content/assets/sass/index.scss",
-    "build-js": "parcel build --no-source-maps --no-autoinstall --bundle-node-modules -d ./public_content/assets/js --public-url /assets/js ./static_content/assets/js/index.js",
-    "postinstall": "npm run build"
+    "build-js": "parcel build --no-source-maps --no-autoinstall --bundle-node-modules -d ./public_content/assets/js --public-url /assets/js ./static_content/assets/js/index.js"
   },
   "repository": {
     "type": "git",
