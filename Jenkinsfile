@@ -20,6 +20,7 @@ pipeline {
       }
     }
     stage('Update Submodules') {
+      when { branch 'master' }
       steps {
         build job: 'rv-devops/master', propagate: false, wait: false                                                      \
                   , parameters: [ booleanParam ( name: 'UPDATE_DEPS'         , value: true                              ) \
