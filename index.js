@@ -44,7 +44,7 @@ const regexp = /{{(.*)}}/;
 /**
  * @param {object} options
  * @param {string} options.sourceHTML the HTML content
- * @param {string} options.websiteDirectory the output website directory
+ * @param {string} options.websiteDirectory the website base directory
  * @param {string} options.targetFilePath the output HTML file path
  * @param {object} options.variables variables map
  */
@@ -95,7 +95,8 @@ function generateOutputWebpage({
  * @param {G.IOptions} options.globOptions which files to ignore
  * @param {string} options.origin where to link to if the link is not a valid md file
  * @param {string} options.sourceDirectory the base directory of the source files
- * @param {string} options.websiteDirectory the output website directory
+ * @param {string} options.outputDirectory the output directory of the genereated HTML files
+ * @param {string} options.websiteDirectory the website base directory
  * @param {string} options.template the webpage template
  */
 function generatePagesFromMarkdownFiles({
@@ -103,6 +104,7 @@ function generatePagesFromMarkdownFiles({
   globOptions = {},
   origin = "",
   sourceDirectory,
+  outputDirectory,
   websiteDirectory,
   template = "",
 }) {
@@ -111,7 +113,7 @@ function generatePagesFromMarkdownFiles({
     const file = files[i];
     const targetFilePath = path.resolve(
       path.resolve(
-        websiteDirectory,
+        outputDirectory,
         path.relative(sourceDirectory, path.dirname(file))
       ),
       path.basename(file).match(/^(index|README)\.md$/i)
@@ -142,7 +144,7 @@ function generatePagesFromMarkdownFiles({
           // might be ./README.md or ./README.md#tag
           let hrefTargetFilePath = path.resolve(
             href.startsWith("/")
-              ? path.resolve(websiteDirectory, "." + path.dirname(href))
+              ? path.resolve(outputDirectory, "." + path.dirname(href))
               : path.resolve(
                   path.dirname(targetFilePath),
                   path.basename(file).match(/^(index|README)\.md$/i)
