@@ -227,7 +227,7 @@ async function buildSitemap({
   });
 
   generator.on("add", (url) => {
-    console.log("* add url: ", url);
+    console.log("* add url: ", url.replace(websiteUrl, websiteOrigin));
   });
 
   generator.on("done", () => {
