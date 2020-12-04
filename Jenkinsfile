@@ -1,8 +1,7 @@
 pipeline {
-  agent { dockerfile { } }
-  options {
-    ansiColor('xterm')
-  }
+  agent { dockerfile { label 'docker' } }
+  options { ansiColor('xterm') }
+  environment { LONG_REV = """${sh(returnStdout: true, script: 'git rev-parse HEAD').trim()}""" }
   stages {
     stage("Init title") {
       when { changeRequest() }
@@ -18,6 +17,15 @@ pipeline {
             '''
           }
         }
+      }
+    }
+    stage('Update Submodules') {
+      steps {
+        build job: 'rv-devops/master', propagate: false, wait: false                                                      \
+                  , parameters: [ booleanParam ( name: 'UPDATE_DEPS'         , value: true                              ) \
+                                , string       ( name: 'UPDATE_DEPS_REPO'    , value: 'runtimeverification/k-web-theme' ) \
+                                , string       ( name: 'UPDATE_DEPS_VERSION' , value: "${env.LONG_REV}")                  \
+                                ]
       }
     }
   }
