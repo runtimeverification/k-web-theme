@@ -7,31 +7,6 @@ RUN    apt-get update          \
     && apt-get upgrade --yes   \
     && DEBIAN_FRONTEND=noninteractive apt-get install --yes tzdata
 
-RUN    apt-get update          \
-    && apt-get upgrade --yes   \
-    && apt-get install --yes   \
-            curl               \
-            gcc                \
-            git                \
-            jq                 \
-            libcrypto++-dev    \
-            libffi-dev         \
-            libgflags-dev      \
-            libjemalloc-dev    \
-            libmpfr-dev        \
-            libprotobuf-dev    \
-            libsecp256k1-dev   \
-            make               \
-            netcat             \
-            npm                \
-            python3-bip32utils \
-            python3-dateutil   \
-            python3-mnemonic   \
-            rapidjson-dev      \
-            rsync              \
-            time               \
-            zip
-
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 RUN    apt-get update               \
     && apt-get upgrade --yes        \
