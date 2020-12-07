@@ -162,7 +162,7 @@ function generatePagesFromMarkdownFiles({
               .relative(path.dirname(targetFilePath), hrefTargetFilePath)
               .replace(/(\/|^)index\.html(#|$)/, (_, pre, post) => pre + post)
           );
-        } else if (!href.endsWith("/")) {
+        } else if (!href.endsWith("/") && !href.startsWith("#")) {
           $(anchorElement).attr("href", url.resolve(origin, href));
         }
       } catch (error) {}
