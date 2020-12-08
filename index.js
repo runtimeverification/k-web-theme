@@ -8,7 +8,6 @@ const url = require("url");
 const Prism = require("prismjs");
 const getPort = require("get-port");
 const express = require("express");
-const path = require("path");
 const SitemapGenerator = require("sitemap-generator");
 const loadLanguages = require("prismjs/components/");
 loadLanguages();
@@ -39,25 +38,28 @@ const md = new MarkdownIt({
 });
 md.use(require("markdown-it-anchor"));
 
-const outPath = "./public_content/";
 const basePath = "static_content/html/";
 const regexp = /{{(.*)}}/;
 
 /**
- *
- * @param {string} sourceHTML the HTML content
- * @param {string} targetFilePath path relative to current __dirname
- * @param {object} variables variables map
+ * @param {object} options
+ * @param {string} options.sourceHTML the HTML content
+ * @param {string} options.websiteDirectory the website base directory
+ * @param {string} options.targetFilePath the output HTML file path
+ * @param {object} options.variables variables map
  */
-function generateOutputWebpage(sourceHTML, targetFilePath, variables = {}) {
-  const filePath = targetFilePath.startsWith("/")
-    ? targetFilePath
-    : path.join(__dirname, outPath, targetFilePath);
+function generateOutputWebpage({
+  sourceHTML,
+  websiteDirectory,
+  targetFilePath,
+  variables = {},
+}) {
+  const filePath = targetFilePath;
   const dirname = path.dirname(filePath);
 
   if (!fs.existsSync(dirname)) fs.mkdirSync(dirname, { recursive: true });
 
-  const relative = path.relative(dirname, outPath);
+  const relative = path.relative(dirname, websiteDirectory);
 
   const resultHTML = sourceHTML
     .split("\n")
@@ -88,12 +90,14 @@ function generateOutputWebpage(sourceHTML, targetFilePath, variables = {}) {
 }
 
 /**
- * @param {string} globPattern
- * @param {G.IOptions} globOptions
- * @param {string} origin GitHub repository
- * @param {string} sourceDirectory
- * @param {string} outputDirectory
- * @param {string} template
+ * @param {object} options
+ * @param {string} options.globPattern which source files to build from
+ * @param {G.IOptions} options.globOptions which files to ignore
+ * @param {string} options.origin where to link to if the link is not a valid md file
+ * @param {string} options.sourceDirectory the base directory of the source files
+ * @param {string} options.outputDirectory the output directory of the genereated HTML files
+ * @param {string} options.websiteDirectory the website base directory
+ * @param {string} options.template the webpage template
  */
 function generatePagesFromMarkdownFiles({
   globPattern,
@@ -101,6 +105,7 @@ function generatePagesFromMarkdownFiles({
   origin = "",
   sourceDirectory,
   outputDirectory,
+  websiteDirectory,
   template = "",
 }) {
   const files = glob.sync(globPattern, globOptions);
@@ -157,33 +162,30 @@ function generatePagesFromMarkdownFiles({
               .relative(path.dirname(targetFilePath), hrefTargetFilePath)
               .replace(/(\/|^)index\.html(#|$)/, (_, pre, post) => pre + post)
           );
-        } else if (!href.endsWith("/")) {
+        } else if (!href.endsWith("/") && !href.startsWith("#")) {
           $(anchorElement).attr("href", url.resolve(origin, href));
         }
       } catch (error) {}
     });
 
-    generateOutputWebpage(template, targetFilePath, {
-      TITLE: targetFilePath,
-      MARKDOWN_HTML: $.html(),
+    generateOutputWebpage({
+      sourceHTML: template,
+      websiteDirectory,
+      targetFilePath,
+      variables: {
+        TITLE: targetFilePath,
+        MARKDOWN_HTML: $.html(),
+      },
     });
   }
 }
 
-function cleanUpFiles() {
-  const kDistributionPath = path.join(
-    __dirname,
-    "./public_content/k-distribution"
-  );
-  if (fs.existsSync(kDistributionPath)) {
-    fs.rmdirSync(kDistributionPath, {
-      recursive: true,
-    });
-  }
-
-  const files = glob.sync(
-    path.join(__dirname, "./public_content/") + "/**/*.html"
-  );
+/**
+ * Clean up the built *.html files in dirPath
+ * @param {string} dirPath
+ */
+function cleanUpFiles(dirPath) {
+  const files = glob.sync(dirPath + "/**/*.html");
   files.forEach((file) => {
     fs.unlinkSync(file);
     const dirPath = path.dirname(file);
@@ -194,15 +196,30 @@ function cleanUpFiles() {
   });
 }
 
-async function buildSitemap(websiteOrigin = "http://127.0.0.1:8080/") {
+/**
+ * Build the sitemap.xml file for the website
+ * @param {object} options
+ * @param {string} options.websiteOrigin the website origin
+ * @param {string} options.websiteDirectory where the website folder is located
+ * @param {string} options.sitemapPath where to save the sitemap.xml
+ */
+async function buildSitemap({
+  websiteOrigin = "http://127.0.0.1:8080/",
+  websiteDirectory = "./public_content/",
+  sitemapPath = "",
+}) {
+  if (!sitemapPath) {
+    sitemapPath = path.join(websiteDirectory, "./sitemap.xml");
+  }
+
   const app = express();
   const port = await getPort();
-  app.use(express.static(path.resolve(__dirname, "../public_content/")));
+  app.use(express.static(websiteDirectory));
   const server = app.listen(port);
   const websiteUrl = `http://127.0.0.1:${port}/`;
   console.log(":: running server at: ", websiteUrl);
 
-  const filePath = path.resolve(__dirname, "../public_content/sitemap.xml");
+  const filePath = path.resolve(sitemapPath);
 
   const generator = SitemapGenerator(websiteUrl, {
     stripQuerystring: true,
@@ -212,7 +229,7 @@ async function buildSitemap(websiteOrigin = "http://127.0.0.1:8080/") {
   });
 
   generator.on("add", (url) => {
-    console.log("* add url: ", url);
+    console.log("* add url: ", url.replace(websiteUrl, websiteOrigin));
   });
 
   generator.on("done", () => {
@@ -240,7 +257,7 @@ async function buildSitemap(websiteOrigin = "http://127.0.0.1:8080/") {
       fs.writeFileSync(filePath, newContent);
     });
 
-    console.log("* sitemaps created");
+    console.log("* sitemaps created at", sitemapPath);
     server.close();
   });
 
