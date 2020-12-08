@@ -21,10 +21,4 @@ RUN    groupadd -g $GROUP_ID user                     \
     && useradd -m -u $USER_ID -s /bin/sh -g user user
 
 USER user:user
-
 ENV LC_ALL=C.UTF-8
-
-ENV LD_LIBRARY_PATH=/usr/local/lib
-ENV NPM_PACKAGES=/home/user/.npm-packages
-ENV PATH=$NPM_PACKAGES/bin:$PATH
-RUN npm config set prefix $NPM_PACKAGES
