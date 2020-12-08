@@ -17,8 +17,7 @@ RUN psvm use v0.13.8
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
-RUN    groupadd -g $GROUP_ID user                     \
-    && useradd -m -u $USER_ID -s /bin/sh -g user user
+RUN    groupadd --gid $GROUP_ID user                                        \
+    && useradd --create-home --uid $USER_ID --shell /bin/sh --gid user user
 
-USER user:user
-ENV LC_ALL=C.UTF-8
+USER $USER_ID:$GROUP_ID

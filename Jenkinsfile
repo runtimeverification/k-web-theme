@@ -1,5 +1,10 @@
 pipeline {
-  agent { dockerfile { label 'docker' } }
+  agent { 
+    dockerfile { 
+      label 'docker'
+      additionalBuildArgs '--build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g)'
+    }
+  }
   options { ansiColor('xterm') }
   environment { LONG_REV = """${sh(returnStdout: true, script: 'git rev-parse HEAD').trim()}""" }
   stages {
