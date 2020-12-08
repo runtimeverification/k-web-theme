@@ -1,11 +1,8 @@
 FROM ubuntu:bionic
 
-ENV TZ=American/Chicago
-
-RUN ln -fs /usr/share/zoneinfo/America/Chicago /etc/localtime
-RUN    apt-get update          \
-    && apt-get upgrade --yes   \
-    && DEBIAN_FRONTEND=noninteractive apt-get install --yes tzdata
+RUN    apt update         \
+    && apt upgrade --yes  \
+    && apt install --yes  curl
 
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 RUN    apt-get update               \
