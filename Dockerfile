@@ -2,7 +2,9 @@ FROM ubuntu:bionic
 
 RUN    apt update         \
     && apt upgrade --yes  \
-    && apt install --yes  curl
+    && apt install --yes  \
+        curl              \
+        git
 
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 RUN    apt-get update               \
