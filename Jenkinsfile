@@ -12,6 +12,7 @@ pipeline {
         stage('Build the package') {
           steps {
             sh '''
+              cd web
               npm install
               npm run build
             '''
