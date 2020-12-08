@@ -12,9 +12,11 @@ pipeline {
         stage('Build the package') {
           steps {
             sh '''
+              pwd
               cd web
               npm install
               npm run build
+              npm run build-sitemap
             '''
           }
         }
