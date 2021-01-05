@@ -2,38 +2,51 @@
 form
 ------------------------------------*/
 
-.form-control, .custom-select,.custom-file, .custom-file-input, .custom-file-label {
+.form-control,
+.custom-select,
+.custom-file,
+.custom-file-input,
+.custom-file-label {
   height: calc(2.25rem + 12px);
   border: 1px solid $border-color;
-  &:focus{
+  &:focus {
     box-shadow: none;
   }
 }
 
-.form-inline{
-  .form-control{
+.form-control,
+.form-control:focus {
+  @media screen and (prefers-color-scheme: dark) {
+    color: $dark-mode-fg;
+    border-color: $dark-mode-border-color;
+    background-color: darken($color: $dark-mode-canvas-color, $amount: 0.1);
+  }
+}
+
+.form-inline {
+  .form-control {
     height: calc(2.25rem + 8px);
   }
 }
 
-.custom-file{
+.custom-file {
   border: none;
 }
 
 .custom-file-label {
-  padding: .65rem .75rem;
-  &:after{
+  padding: 0.65rem 0.75rem;
+  &:after {
     height: 2.85rem;
     padding: inherit;
     background: lighten($border-color, 7%);
-    border-radius: 0 .15rem .15rem 0;
+    border-radius: 0 0.15rem 0.15rem 0;
   }
 }
 
 .icon-field,
 .icon-field-right {
   position: relative;
-  i{
+  i {
     user-select: none;
     cursor: default;
     position: absolute;
@@ -42,43 +55,43 @@ form
 }
 
 .icon-field {
-  i{
+  i {
     top: 15px;
     left: 15px;
   }
-  input{
+  input {
     padding-left: 45px;
   }
 }
 
 .icon-field-right {
-  i{
+  i {
     top: 15px;
     right: 15px;
   }
-  input{
+  input {
     padding-right: 45px;
   }
 }
 
 .custom-control-label::before,
-.custom-control-label::after{
-  top: .1rem;
+.custom-control-label::after {
+  top: 0.1rem;
   left: -1.5rem;
   width: 1.3rem;
   height: 1.3rem;
 }
 
-.custom-control-label::before{
+.custom-control-label::before {
   border: 1px solid $border-color;
 }
 
-.custom-control-label{
+.custom-control-label {
   padding-left: 10px;
 }
 
 .custom-switch {
-  .custom-control-label{
+  .custom-control-label {
     &::before {
       left: -2.25rem;
       width: 40px;
@@ -88,7 +101,7 @@ form
       background: $gray-light;
     }
     &:after {
-      top: calc(.25rem - 1px);
+      top: calc(0.25rem - 1px);
       left: calc(-2.25rem + 3px);
       width: calc(1.4rem - 2px);
       height: calc(1.4rem - 2px);
@@ -96,9 +109,9 @@ form
       border-radius: 5rem;
     }
   }
-  .custom-control-input:checked~.custom-control-label{
-    &:after{
-      transform: translateX(.95rem);
+  .custom-control-input:checked ~ .custom-control-label {
+    &:after {
+      transform: translateX(0.95rem);
     }
   }
   .custom-control-label {
@@ -106,20 +119,18 @@ form
   }
 }
 
-
-.custom-file-input:focus~.custom-file-label,
-.custom-control-input:focus~.custom-control-label::before{
+.custom-file-input:focus ~ .custom-file-label,
+.custom-control-input:focus ~ .custom-control-label::before {
   box-shadow: none;
-
 }
 
-.custom-control-input:checked~.custom-control-label::before,
-.custom-control-input:focus:not(:checked)~.custom-control-label::before{
+.custom-control-input:checked ~ .custom-control-label::before,
+.custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
   border: 1px solid $border-color;
 }
 
 .custom-select {
-  background: url('./select-arrow.svg') no-repeat right .75rem center/8px 10px;
+  background: url("./select-arrow.svg") no-repeat right 0.75rem center/8px 10px;
   background-color: $white;
 }
 
@@ -142,10 +153,11 @@ form
   height: 80px;
   border-radius: 50%;
   background: #fff;
-  box-shadow: 0 .2rem .8rem rgba(36, 36, 36, .15);
+  box-shadow: 0 0.2rem 0.8rem rgba(36, 36, 36, 0.15);
 }
 
-.c-form-content, .coming-soon-social {
+.c-form-content,
+.coming-soon-social {
   position: absolute;
   bottom: 3%;
   color: $white;
@@ -154,11 +166,11 @@ form
   width: 100%;
 }
 
-.coming-soon-social{
+.coming-soon-social {
   left: 0;
 }
 
-@media  (max-width: 991px) {
+@media (max-width: 991px) {
   .coming-soon-social {
     position: relative;
     padding: 0;
@@ -166,7 +178,7 @@ form
   }
 }
 
-@media  (max-width: 767px) {
+@media (max-width: 767px) {
   .form-inline .form-control {
     height: calc(2.25rem + 0px);
   }
