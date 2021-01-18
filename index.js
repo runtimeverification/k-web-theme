@@ -168,6 +168,8 @@ function generatePagesFromMarkdownFiles({
       } catch (error) {}
     });
 
+    $("table").addClass("table");
+
     generateOutputWebpage({
       sourceHTML: template,
       websiteDirectory,

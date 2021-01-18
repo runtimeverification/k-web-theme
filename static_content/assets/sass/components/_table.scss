@@ -4,8 +4,8 @@ table
 
 .vl-custom-table {
   border-spacing: 0 1em;
-  border-collapse:separate;
-  h6{
+  border-collapse: separate;
+  h6 {
     font-size: 16px;
     color: $gray-darker;
   }
@@ -13,11 +13,12 @@ table
     th {
       vertical-align: middle;
       border-bottom: none;
-      padding: .5rem 1.75rem;
+      padding: 0.5rem 1.75rem;
     }
   }
 
-  th, td{
+  th,
+  td {
     vertical-align: middle;
     border-top: none;
     font-family: $base-font;
@@ -67,16 +68,16 @@ table
       background-color: inherit;
     }
   }
-
 }
 
 .table-striped {
-  td, th{
+  td,
+  th {
     vertical-align: middle;
   }
-  tbody{
+  tbody {
     tr:nth-of-type(odd) {
-      background-color: rgba(0,0,0,.025);
+      background-color: rgba(0, 0, 0, 0.025);
     }
   }
 }
@@ -87,12 +88,13 @@ table
       border-bottom-width: 1px;
     }
   }
-  .btn{
+  .btn {
     white-space: nowrap;
   }
 
   @media screen and (prefers-color-scheme: dark) {
-    thead {
+    thead,
+    td {
       color: $dark-mode-fg;
     }
   }
