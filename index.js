@@ -38,8 +38,12 @@ const md = new MarkdownIt({
 });
 md.use(require("markdown-it-anchor"));
 
-const basePath = "static_content/html/";
+let basePath = "static_content/html/";
 const regexp = /{{(.*)}}/;
+
+function setHTMLBasePath(bPath) {
+  basePath = bPath;
+}
 
 /**
  * @param {object} options
@@ -269,6 +273,7 @@ async function buildSitemap({
 }
 
 module.exports = {
+  setHTMLBasePath,
   generateOutputWebpage,
   generatePagesFromMarkdownFiles,
   cleanUpFiles,
