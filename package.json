@@ -48,6 +48,7 @@
     "toastr": "^2.1.4",
     "twitter-fetcher": "^18.0.4",
     "webfonts-generator": "^0.4.0",
-    "wow.js": "^1.2.2"
+    "wow.js": "^1.2.2",
+    "yaml": "^1.10.0"
   }
 }
