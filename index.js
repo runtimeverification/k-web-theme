@@ -10,12 +10,16 @@ const getPort = require("get-port");
 const express = require("express");
 const SitemapGenerator = require("sitemap-generator");
 const loadLanguages = require("prismjs/components/");
+const YAML = require("yaml");
 loadLanguages();
 const defineK = require("./prismjs/k");
 defineK(Prism);
 const defineIELE = require("./prismjs/iele");
 defineIELE(Prism);
 
+/**
+ * @type MarkdownIt
+ */
 const md = new MarkdownIt({
   html: true,
   linkify: true,
@@ -38,8 +42,12 @@ const md = new MarkdownIt({
 });
 md.use(require("markdown-it-anchor"));
 
-const basePath = "static_content/html/";
+let basePath = "static_content/html/";
 const regexp = /{{(.*)}}/;
+
+function setHTMLBasePath(bPath) {
+  basePath = bPath;
+}
 
 /**
  * @param {object} options
@@ -111,7 +119,7 @@ function generatePagesFromMarkdownFiles({
   const files = glob.sync(globPattern, globOptions);
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
-    const targetFilePath = path.resolve(
+    let targetFilePath = path.resolve(
       path.resolve(
         outputDirectory,
         path.relative(sourceDirectory, path.dirname(file))
@@ -126,9 +134,22 @@ function generatePagesFromMarkdownFiles({
       /* tslint:disable-next-line:no-conditional-assignment */
       (endFrontMatterOffset = markdown.indexOf("\n---")) > 0
     ) {
+      const yaml = markdown.slice(3, endFrontMatterOffset).trim();
       markdown = markdown
         .slice(endFrontMatterOffset + 4)
         .replace(/^[ \t]*\n/, "");
+      try {
+        const frontMatter = YAML.parse(yaml);
+        if ("permalink" in frontMatter) {
+          targetFilePath = path.resolve(
+            path.resolve(
+              outputDirectory,
+              path.relative(sourceDirectory, path.dirname(file))
+            ),
+            frontMatter["permalink"] + "/index.html"
+          );
+        }
+      } catch (error) {}
     }
     const html = md.render(markdown);
 
@@ -269,8 +290,10 @@ async function buildSitemap({
 }
 
 module.exports = {
+  setHTMLBasePath,
   generateOutputWebpage,
   generatePagesFromMarkdownFiles,
   cleanUpFiles,
   buildSitemap,
+  md,
 };
