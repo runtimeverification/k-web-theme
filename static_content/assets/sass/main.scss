@@ -904,3 +904,23 @@ h6 a {
     color: $rv-blue-dark;
   }
 }
+
+blockquote {
+  margin: 16px 0;
+  font-size: inherit;
+  padding: 0 15px;
+  color: #5c5c5c;
+  background-color: #f0f0f0;
+  border-left: 4px solid #d6d6d6;
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  blockquote {
+    margin: 16px 0;
+    font-size: inherit;
+    padding: 0 15px;
+    color: #fdfdfd;
+    background-color: #323232;
+    border-left: 4px solid #474747;
+  }
+}
