@@ -42,6 +42,10 @@ const md = new MarkdownIt({
 });
 md.use(require("markdown-it-anchor"));
 
+const websiteFooter = fs
+  .readFileSync(path.resolve(__dirname, "./static_content/html/footer.html"))
+  .toString("utf-8")
+  .replace(/{{\$YEAR}}/gi, new Date().getFullYear());
 const regexp = /{{(.*)}}/;
 
 /**
@@ -63,6 +67,7 @@ function generateOutputWebpage({
   variables = Object.assign(
     {
       YEAR: new Date().getFullYear(),
+      WEBSITE_FOOTER: websiteFooter,
     },
     variables
   );
