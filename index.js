@@ -42,26 +42,36 @@ const md = new MarkdownIt({
 });
 md.use(require("markdown-it-anchor"));
 
-let basePath = "static_content/html/";
+const websiteFooter = fs
+  .readFileSync(path.resolve(__dirname, "./static_content/html/footer.html"))
+  .toString("utf-8")
+  .replace(/{{\$YEAR}}/gi, new Date().getFullYear());
 const regexp = /{{(.*)}}/;
-
-function setHTMLBasePath(bPath) {
-  basePath = bPath;
-}
 
 /**
  * @param {object} options
  * @param {string} options.sourceHTML the HTML content
+ * @param {string} options.includeFileBasePath this is the base path of {{include/file.html}}
  * @param {string} options.websiteDirectory the website base directory
  * @param {string} options.targetFilePath the output HTML file path
  * @param {object} options.variables variables map
  */
 function generateOutputWebpage({
   sourceHTML,
+  includeFileBasePath,
   websiteDirectory,
   targetFilePath,
   variables = {},
 }) {
+  // Set default variables values
+  variables = Object.assign(
+    {
+      YEAR: new Date().getFullYear(),
+      WEBSITE_FOOTER: websiteFooter,
+    },
+    variables
+  );
+
   const filePath = targetFilePath;
   const dirname = path.dirname(filePath);
 
@@ -76,7 +86,9 @@ function generateOutputWebpage({
       let content = line;
 
       if (match && match.length == 2 && !match[1].startsWith("$")) {
-        content = fs.readFileSync(basePath + match[1]).toString();
+        content = fs
+          .readFileSync(path.resolve(includeFileBasePath, match[1]))
+          .toString();
       }
 
       // Fix assets folder path error for github page
@@ -106,6 +118,7 @@ function generateOutputWebpage({
  * @param {string} options.outputDirectory the output directory of the genereated HTML files
  * @param {string} options.websiteDirectory the website base directory
  * @param {string} options.template the webpage template
+ * @param {string} options.includeFileBasePath this is the base path of {{include/file.html}}
  */
 function generatePagesFromMarkdownFiles({
   globPattern,
@@ -115,6 +128,7 @@ function generatePagesFromMarkdownFiles({
   outputDirectory,
   websiteDirectory,
   template = "",
+  includeFileBasePath,
 }) {
   const files = glob.sync(globPattern, globOptions);
   for (let i = 0; i < files.length; i++) {
@@ -199,6 +213,7 @@ function generatePagesFromMarkdownFiles({
         TITLE: targetFilePath,
         MARKDOWN_HTML: $.html(),
       },
+      includeFileBasePath,
     });
   }
 }
@@ -290,7 +305,6 @@ async function buildSitemap({
 }
 
 module.exports = {
-  setHTMLBasePath,
   generateOutputWebpage,
   generatePagesFromMarkdownFiles,
   cleanUpFiles,
