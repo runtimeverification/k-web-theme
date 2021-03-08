@@ -872,7 +872,8 @@ video.modal-content {
   }
 }
 
-pre[class*="language-"] {
+pre[class*="language-"],
+pre {
   background-color: #f7f8fa;
   font-size: 0.85rem;
   word-break: normal;
@@ -882,7 +883,9 @@ pre[class*="language-"] {
 }
 
 @media screen and (prefers-color-scheme: dark) {
-  pre[class*="language-"] {
+  pre[class*="language-"],
+  pre {
+    color: $dark-mode-code-block-fg;
     background-color: darken($color: $dark-mode-canvas-color, $amount: 5%);
   }
 }
