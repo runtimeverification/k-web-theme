@@ -3,45 +3,44 @@ typist
 ------------------------------------*/
 
 @-webkit-keyframes blink {
-  0%
-  {
-    opacity: 1.0;
+  0% {
+    opacity: 1;
   }
-  50%
-  {
-    opacity: .0;
+  50% {
+    opacity: 0;
   }
-  100%
-  {
-    opacity: 1.0;
+  100% {
+    opacity: 1;
   }
 }
 
 @keyframes blink {
-  0%
-  {
-    opacity: 1.0;
+  0% {
+    opacity: 1;
   }
-  50%
-  {
-    opacity: .0;
+  50% {
+    opacity: 0;
   }
-  100%
-  {
-    opacity: 1.0;
+  100% {
+    opacity: 1;
   }
 }
 
 .typist-blink:after {
   position: relative;
-  top: 10px;
+  top: 3px;
   display: inline-block;
-  height: 40px;
+  height: 26px;
   margin-right: 7px;
   margin-left: 3px;
-  content: ' ';
+  content: " ";
   animation: blink 1s step-start 0s infinite;
   border-right: 2px solid;
+
+  @media (max-width: 667px) {
+    top: 2px;
+    height: 22px;
+  }
 }
 
 .typist-blink > .selectedText {
@@ -52,4 +51,22 @@ typist
   font-style: normal;
   color: $white;
   background-color: $dark;
+}
+
+@media screen and (max-width: 1080px) and (min-width: 768px) {
+  .firefly-typist-header {
+    min-height: 180px;
+  }
+}
+
+@media screen and (max-width: 767px) and (min-width: 668px) {
+  .firefly-typist-header {
+    min-height: 102px;
+  }
+}
+
+@media screen and (max-width: 667px) {
+  .firefly-typist-header {
+    min-height: 124px;
+  }
 }

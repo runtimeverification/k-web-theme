@@ -27,7 +27,7 @@ progress bar
   }
 }
 
-.custom-progress:first-child{
+.custom-progress:first-child {
   margin-top: 1.5rem;
 }
 
@@ -35,17 +35,17 @@ progress bar
   overflow: visible;
 }
 
-
 .custom-progress.dark-progress,
-.custom-progress-inside.dark-progress{
-  .progress-bar{
+.custom-progress-inside.dark-progress {
+  .progress-bar {
     background: $dark;
   }
 }
 
 .progress-light-txt {
   .progress-bar {
-    .skills-info, span {
+    .skills-info,
+    span {
       color: $white;
     }
   }
@@ -63,7 +63,6 @@ progress bar
       color: $white;
       text-align: left;
       padding: 0 1rem;
-
     }
     span {
       line-height: normal;

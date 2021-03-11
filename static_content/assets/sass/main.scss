@@ -91,7 +91,7 @@ html body {
   background-color: $white;
 
   @media screen and (prefers-color-scheme: dark) {
-    background-color: lighten($color: $dark-mode-bg, $amount: 4%);
+    background-color: $dark-mode-bg;
     color: $dark-mode-fg;
   }
 }
@@ -271,6 +271,8 @@ pre[class*="language-"] {
 
       pre {
         margin: 0;
+        padding: 0;
+        background: inherit;
       }
     }
     th {
@@ -434,6 +436,34 @@ a.wizard-link:visited {
   background: $white;
   color: gray !important;
   margin-left: 2em;
+}
+
+#firefly-reports,
+#firefly-report {
+  margin-bottom: 100px;
+  thead {
+    tr th {
+      padding: 0.5rem 0.75rem;
+      text-align: center;
+    }
+  }
+  tbody .report-row-header td {
+    text-align: center;
+
+    .report-id {
+      color: $rv-blue;
+      text-decoration: underline;
+
+      &:hover {
+        color: darken($rv-blue, 8);
+      }
+    }
+  }
+  .center-image {
+    padding-bottom: 0px;
+    padding-left: 21px;
+    padding-right: 21px;
+  }
 }
 
 .report-buttons > ul {
@@ -601,7 +631,25 @@ i.fa {
 
 @include indent(2);
 
+.btn-download-report {
+  background-image: url("../img/icons/Firefly-Download-Icon.png");
+  &:hover {
+    background-image: url("../img/icons/Firefly-Download-Icon-Inverted.png");
+  }
+}
+
+.btn-copy-report-id {
+  font-size: 1rem !important;
+  cursor: pointer;
+  background-size: cover;
+  display: inline-block;
+}
+
 @media (min-width: 1025px) {
+  #firefly-header:not(.sticky-nav) > .container > .row > .col-12 {
+    min-height: 150px;
+  }
+
   .vlmenu {
     & > li:not(:last-child) {
       margin-right: 20px;
@@ -757,6 +805,13 @@ video {
   }
 }
 
+#firefly-profile {
+  .btn {
+    margin: 4px auto;
+    padding: 4px 1rem;
+  }
+}
+
 .icon {
   font-size: 2rem;
   color: $rv-blue;
@@ -845,15 +900,16 @@ video.modal-content {
   position: absolute;
   top: 15px;
   right: 35px;
-  color: $rv-yellow;
+  color: $rv-blue;
   font-size: 50px;
   font-weight: bold;
   transition: 0.3s;
+  z-index: 99;
 }
 
 .close:hover,
 .close:focus {
-  color: $rv-yellow-dark;
+  color: $rv-yellow;
   text-decoration: none;
   cursor: pointer;
 }
@@ -862,6 +918,206 @@ video.modal-content {
 @media only screen and (max-width: 1024px) {
   .modal-content {
     width: 100%;
+  }
+}
+
+#firefly-feedback {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 999;
+
+  & > picture > img {
+    width: 100px;
+  }
+  img {
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+  .feedback-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background: #fff;
+    padding: 24px;
+    border-radius: 4px;
+    box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.2);
+
+    .fa-times {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      cursor: pointer;
+      opacity: 0.5;
+      transition: opacity 0.3s;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+    .feedback-rating {
+      display: flex;
+      justify-content: space-evenly;
+
+      & > picture > img {
+        height: 120px;
+        margin: 4px 18px;
+      }
+    }
+    .feedback-message {
+      float: left;
+      width: 100%;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      overflow: scroll;
+      height: 150px;
+    }
+  }
+
+  @media only screen and (max-width: 767px) {
+    .feedback-form {
+      position: fixed;
+      left: 8px;
+      right: 8px;
+      bottom: 8px;
+
+      .feedback-rating > picture > img {
+        height: 100px;
+      }
+    }
+  }
+
+  @media screen and (prefers-color-scheme: dark) {
+    .feedback-form {
+      background-color: $dark-mode-bg;
+      color: $dark-mode-fg;
+    }
+  }
+}
+
+#contact-links {
+  img {
+    margin-right: 1rem;
+  }
+}
+
+#bytecodes,
+// #solidity-links,
+#solidity-files,
+#contract-links {
+  margin-bottom: 24px;
+}
+
+.drop-area {
+  margin-top: 0;
+  text-align: center;
+  height: 64px;
+  border-style: dashed;
+  border-color: $gray-darker;
+  cursor: pointer;
+  margin-bottom: 0;
+  background-color: darken($background, 1%);
+  &:hover {
+    background-color: darken($background, 4%);
+  }
+  p {
+    margin: 0;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  &.uploader {
+    margin-bottom: 0;
+  }
+
+  @media screen and (prefers-color-scheme: dark) {
+    color: $fg;
+    border-color: $dark-mode-gray-darker;
+  }
+}
+
+.ratings {
+  display: inline-block;
+
+  p {
+    display: inline-block;
+  }
+
+  #positive {
+    text-align: left;
+  }
+
+  #indifferent {
+    text-align: center;
+  }
+
+  #negative {
+    text-align: right;
+  }
+}
+
+.feedback-table {
+  height: 70%;
+}
+
+.color-erc20-green {
+  color: $erc20-green !important;
+}
+
+.background-color-erc20-green {
+  background-color: $erc20-green !important;
+}
+
+#erc20-dashboard,
+#erc20-bytecode,
+#erc20-dev-dashboard {
+  .bytecode-row-header {
+    h6 a {
+      color: $rv-blue;
+      text-decoration: underline;
+
+      &:hover {
+        color: darken($rv-blue, 8);
+      }
+    }
+  }
+
+  .markdown-preview {
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    padding: 8px;
+    margin-bottom: 32px;
+
+    pre[class*="language-"] {
+      background-color: #f7f8fa;
+      font-size: 0.85rem;
+      word-break: normal;
+      white-space: pre-wrap;
+      padding: 16px;
+      overflow: auto;
+    }
+
+    @media screen and (prefers-color-scheme: dark) {
+      color: $dark-mode-gray-light;
+      border: 1px solid $dark-mode-border-color;
+
+      pre[class*="language-"] {
+        background-color: #1d1f21;
+      }
+    }
+  }
+
+  @media screen and (prefers-color-scheme: dark) {
+    color: $dark-mode-fg;
+
+    .table {
+      color: $dark-mode-fg;
+    }
   }
 }
 
@@ -886,7 +1142,7 @@ pre {
   pre[class*="language-"],
   pre {
     color: $dark-mode-code-block-fg;
-    background-color: darken($color: $dark-mode-canvas-color, $amount: 5%);
+    background-color: #1d1f21;
   }
 }
 
@@ -905,6 +1161,133 @@ h6 a {
   color: $rv-blue;
   &:hover {
     color: $rv-blue-dark;
+  }
+}
+
+.rv-btn {
+  background-color: $white;
+  color: $dark;
+  border-color: $dark;
+
+  &:hover {
+    background-color: darken($white, 5);
+    border-color: darken($dark, 5);
+  }
+
+  @media screen and (prefers-color-scheme: dark) {
+    background-color: $dark;
+    color: $white;
+    border-color: $white;
+
+    &:hover {
+      color: $white;
+      background-color: darken($dark, 1);
+      border-color: darken($white, 5);
+    }
+  }
+}
+
+.rv-btn-yellow {
+  color: $dark;
+  background-color: $rv-yellow;
+  border-color: $rv-yellow;
+
+  &:hover {
+    background-color: darken($rv-yellow, 5);
+    border-color: darken($rv-yellow, 5);
+  }
+
+  @media screen and (prefers-color-scheme: dark) {
+    background-color: $rv-yellow-dark;
+    border-color: $rv-yellow-dark;
+
+    &:hover {
+      background-color: darken($rv-yellow-dark, 5);
+      border-color: darken($rv-yellow-dark, 5);
+    }
+  }
+}
+
+.rv-btn-blue {
+  color: $white !important;
+  background-color: $rv-blue;
+  border-color: $rv-blue;
+
+  &:hover {
+    color: $white !important;
+    background-color: darken($rv-blue, 5);
+    border-color: darken($rv-blue, 5);
+  }
+
+  @media screen and (prefers-color-scheme: dark) {
+    background-color: $rv-blue-dark;
+    border-color: $rv-blue-dark;
+
+    &:hover {
+      background-color: darken($rv-blue-dark, 5);
+      border-color: darken($rv-blue-dark, 5);
+    }
+  }
+}
+
+.rv-btn-red {
+  color: $white !important;
+  background-color: $rv-red;
+  border-color: $rv-red;
+
+  &:hover {
+    color: $white !important;
+    background-color: darken($rv-red, 5);
+    border-color: darken($rv-red, 5);
+  }
+
+  @media screen and (prefers-color-scheme: dark) {
+    background-color: $rv-red-dark;
+    border-color: $rv-red-dark;
+
+    &:hover {
+      background-color: darken($rv-red-dark, 5);
+      border-color: darken($rv-red-dark, 5);
+    }
+  }
+}
+
+.rv-btn-green {
+  color: $white !important;
+  background-color: $erc20-green;
+  border-color: $erc20-green;
+
+  &:hover {
+    color: $white !important;
+    background-color: darken($erc20-green, 5);
+    border-color: darken($erc20-green, 5);
+  }
+
+  @media screen and (prefers-color-scheme: dark) {
+    background-color: $erc20-green-dark;
+    border-color: $erc20-green-dark;
+
+    &:hover {
+      background-color: darken($erc20-green-dark, 5);
+      border-color: darken($erc20-green-dark, 5);
+    }
+  }
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+  }
+
+  @media screen and (prefers-color-scheme: dark) {
+    background-color: lighten($dark-mode-bg, 4);
+    color: $dark-mode-fg;
+    border-color: $dark-mode-border-color;
   }
 }
 

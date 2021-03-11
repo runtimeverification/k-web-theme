@@ -2,20 +2,20 @@
 blurb
 ------------------------------------*/
 
-.blurb{
-  i{
+.blurb {
+  i {
     font-size: 3rem;
     display: inline-block;
     margin-bottom: 2rem;
   }
-  p{
+  p {
     color: $gray-dark;
     padding-right: 2rem;
   }
 }
 
 .blurb.text-right {
-  p{
+  p {
     padding-right: 0;
     padding-left: 2rem;
   }
@@ -26,19 +26,19 @@ blurb
   border-radius: 6px;
   padding: 1.8rem;
   background: $white;
-  p{
+  p {
     padding: 0;
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
   }
 }
 
 @media (max-width: 767px) {
-  .blurb{
-    i{
+  .blurb {
+    i {
       font-size: 2.5rem;
     }
   }
-  .blurb-border{
+  .blurb-border {
     margin-bottom: 1.5rem;
   }
 }

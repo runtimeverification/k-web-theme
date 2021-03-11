@@ -25,24 +25,22 @@ countdown
   }
 }
 
-
 .count-solid-dark {
   .count-block {
     margin-bottom: 20px;
     background: $dark;
-    h2, span{
+    h2,
+    span {
       color: $white;
     }
   }
 }
-
 
 .circle {
   .count-block {
     border-radius: 50%;
   }
 }
-
 
 .round {
   .count-block {
@@ -59,4 +57,3 @@ countdown
     }
   }
 }
-

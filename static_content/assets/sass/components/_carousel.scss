@@ -8,8 +8,8 @@ carousel
   height: auto;
   margin-left: auto;
   margin-right: auto;
-  opacity: .5;
-  &:hover{
+  opacity: 0.5;
+  &:hover {
     opacity: 1;
   }
 }
@@ -19,15 +19,15 @@ carousel
 .dot-style-1.owl-theme {
   .owl-dots {
     .owl-dot {
-      span{
+      span {
         width: 6px;
         height: 6px;
         background: $dark;
-        transition: all .3s;
+        transition: all 0.3s;
       }
     }
     .owl-dot.active {
-      span{
+      span {
         transform: scale(1.5);
       }
     }
@@ -39,16 +39,16 @@ carousel
 .dot-style-2.owl-theme {
   .owl-dots {
     .owl-dot {
-      span{
+      span {
         width: 10px;
         height: 10px;
         background: $dark;
-        transition: all .3s;
+        transition: all 0.3s;
         background: $gray;
       }
     }
     .owl-dot.active {
-      span{
+      span {
         width: 20px;
         height: 10px;
         margin: 5px 3px;
@@ -66,26 +66,26 @@ carousel
 
 // center mode
 
-.carousel-highlighter.owl-carousel .owl-item{
-  opacity: .2;
-  .card-img-overlay{
+.carousel-highlighter.owl-carousel .owl-item {
+  opacity: 0.2;
+  .card-img-overlay {
     opacity: 0;
   }
 }
 
 .carousel-highlighter.owl-carousel .owl-item.center {
   opacity: 1;
-  .card-img-overlay{
+  .card-img-overlay {
     opacity: 1;
   }
 }
 
-.carousel-zoom-img{
-  .owl-stage-outer{
+.carousel-zoom-img {
+  .owl-stage-outer {
     overflow: visible;
   }
   .owl-item .item {
-    h6{
+    h6 {
       opacity: 0;
     }
   }
@@ -94,27 +94,26 @@ carousel
     transform: scale(1.2, 1.2);
     z-index: 100;
     position: relative;
-    h6{
+    h6 {
       opacity: 1;
     }
   }
 
-  .owl-dots{
+  .owl-dots {
     margin-top: 4rem;
   }
 }
 
-
 //nav style
 
 .owl-theme .owl-nav,
-.owl-theme .owl-nav.disabled + .owl-dots{
+.owl-theme .owl-nav.disabled + .owl-dots {
   margin-top: 30px;
 }
 
-.nav-circle.owl-theme .owl-nav [class*=owl-],
-.nav-circle-light.owl-theme .owl-nav [class*=owl-],
-.nav-circle-solid-light.owl-theme .owl-nav [class*=owl-] {
+.nav-circle.owl-theme .owl-nav [class*="owl-"],
+.nav-circle-light.owl-theme .owl-nav [class*="owl-"],
+.nav-circle-solid-light.owl-theme .owl-nav [class*="owl-"] {
   position: relative;
   width: 50px;
   height: 50px;
@@ -125,27 +124,26 @@ carousel
   font-size: 12px;
   color: $gray-dark;
   margin-bottom: 2rem;
-  &:hover{
+  &:hover {
     background: $dark;
     border-color: $dark;
     color: $white;
   }
 }
 
-.nav-circle-light.owl-theme .owl-nav [class*=owl-]{
-  &:hover{
+.nav-circle-light.owl-theme .owl-nav [class*="owl-"] {
+  &:hover {
     background: $white;
     border-color: $white;
     color: $dark;
   }
 }
 
-
-.nav-circle-solid-light.owl-theme .owl-nav [class*=owl-]{
+.nav-circle-solid-light.owl-theme .owl-nav [class*="owl-"] {
   background: $white;
   border-color: $white;
   color: $dark;
-  &:hover{
+  &:hover {
     background: $primary-color;
     border-color: $primary-color;
     color: $white;
@@ -154,7 +152,7 @@ carousel
 
 // nav round style
 
-.nav-round.owl-theme .owl-nav [class*=owl-] {
+.nav-round.owl-theme .owl-nav [class*="owl-"] {
   position: relative;
   width: 40px;
   height: 90px;
@@ -162,10 +160,10 @@ carousel
   text-align: center;
   border-radius: 6px;
   font-size: 12px;
-  background: rgba(0,0,0,.3);
+  background: rgba(0, 0, 0, 0.3);
   color: $white;
   margin-bottom: 2rem;
-  &:hover{
+  &:hover {
     background: $dark;
   }
 }
@@ -177,27 +175,27 @@ carousel
   margin-top: -90px;
 }
 
-.nav-round.owl-carousel .owl-nav .owl-prev{
+.nav-round.owl-carousel .owl-nav .owl-prev {
   left: -5px;
   border-radius: 0 6px 6px 0;
 }
 
-.nav-round.owl-carousel .owl-nav .owl-next{
+.nav-round.owl-carousel .owl-nav .owl-next {
   right: -5px;
   border-radius: 6px 0 0 6px;
 }
 
 // custom-testimonial
 
-.custom-testimonial.owl-theme .owl-nav{
+.custom-testimonial.owl-theme .owl-nav {
   bottom: 2%;
 }
 
-.custom-testimonial.owl-theme .owl-nav{
+.custom-testimonial.owl-theme .owl-nav {
   margin-top: 0;
 }
 
-.custom-testimonial.owl-theme .owl-nav [class*=owl-] {
+.custom-testimonial.owl-theme .owl-nav [class*="owl-"] {
   font-size: 12px;
   position: relative;
   width: 35px;
@@ -207,7 +205,7 @@ carousel
   color: $gray-dark;
   border: 1px solid $gray;
   border-radius: 50%;
-  &:hover{
+  &:hover {
     background: $dark;
     border-color: $dark;
     color: $white;
@@ -221,13 +219,10 @@ carousel
 @media (min-width: 1025px) {
   .nav-circle.owl-carousel .owl-nav .owl-prev,
   .nav-circle.owl-carousel .owl-nav .owl-next,
-
   .nav-circle-light.owl-carousel .owl-nav .owl-prev,
   .nav-circle-light.owl-carousel .owl-nav .owl-next,
-
   .nav-circle-solid-light.owl-carousel .owl-nav .owl-prev,
   .nav-circle-solid-light.owl-carousel .owl-nav .owl-next,
-
   .nav-inside.owl-carousel .owl-nav .owl-prev,
   .nav-inside.owl-carousel .owl-nav .owl-next {
     position: absolute;
@@ -237,37 +232,36 @@ carousel
 
   .nav-circle.owl-carousel .owl-nav .owl-prev,
   .nav-circle-light.owl-carousel .owl-nav .owl-prev,
-  .nav-circle-solid-light.owl-carousel .owl-nav .owl-prev{
+  .nav-circle-solid-light.owl-carousel .owl-nav .owl-prev {
     left: -8%;
   }
 
   .nav-circle.owl-carousel .owl-nav .owl-next,
   .nav-circle-light.owl-carousel .owl-nav .owl-next,
-  .nav-circle-solid-light.owl-carousel .owl-nav .owl-next{
+  .nav-circle-solid-light.owl-carousel .owl-nav .owl-next {
     right: -8%;
   }
 
   .nav-inside.owl-carousel .owl-nav .owl-prev,
-  .nav-inside.owl-carousel .owl-nav .owl-prev{
+  .nav-inside.owl-carousel .owl-nav .owl-prev {
     left: 3%;
   }
 
   .nav-inside.owl-carousel .owl-nav .owl-next,
-  .nav-inside.owl-carousel .owl-nav .owl-next{
+  .nav-inside.owl-carousel .owl-nav .owl-next {
     right: 3%;
   }
 
-  .custom-testimonial.owl-theme .owl-nav{
+  .custom-testimonial.owl-theme .owl-nav {
     margin-top: 0;
     position: absolute;
     z-index: 100;
     bottom: 8%;
     right: 11%;
   }
-
 }
 
-.t-star-icon{
+.t-star-icon {
   font-size: 8px;
   position: relative;
   bottom: 2px;

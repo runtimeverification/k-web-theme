@@ -14,7 +14,7 @@ img.block-image {
   object-fit: cover;
 }
 
-.block-image:not([class*='absolute']) {
+.block-image:not([class*="absolute"]) {
   position: absolute;
 }
 
@@ -22,19 +22,17 @@ img.block-image {
   position: absolute;
   bottom: 10%;
   left: 0;
-  background: rgba(255,255,255,.9);
+  background: rgba(255, 255, 255, 0.9);
   padding: 1.5rem;
-  border-radius: 0 .375rem .375rem 0;
+  border-radius: 0 0.375rem 0.375rem 0;
   width: 70%;
 }
-
 
 @media (min-width: 1025px) {
   .parallax-img {
     background-attachment: fixed;
   }
 }
-
 
 @media (max-width: 767px) {
   .img-caption {

@@ -198,7 +198,7 @@
     z-index: 10;
     transition: all 0.1s ease;
     .navbar-brand {
-      margin-top: 8px;
+      margin-top: 0;
     }
     .logo-light {
       display: none;
@@ -237,7 +237,7 @@
   .transparent-header {
     background: transparent;
     top: auto;
-    // padding-top: 2rem;
+    padding-top: 2rem;
     .vlmenu > li > a {
       color: $white;
       &:hover {
@@ -265,10 +265,13 @@
     }
     .logo-dark {
       display: block;
+      height: 50px;
     }
 
     @media screen and (prefers-color-scheme: dark) {
       background: $dark-mode-bg;
+      box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%),
+        0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
       .vlmenu > li > a {
         color: $dark-mode-fg;
       }

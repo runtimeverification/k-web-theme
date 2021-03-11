@@ -18,7 +18,7 @@
   background: $danger-color;
 }
 
-.text-primary{
+.text-primary {
   color: $primary-color;
 }
 
@@ -31,12 +31,12 @@
 }
 
 .rounded {
-  border-radius: 6px!important;
+  border-radius: 6px !important;
 }
 
 //card
 
-.card{
+.card {
   border-color: $border-color;
   border-radius: 6px;
 }
@@ -46,15 +46,15 @@
   border-top-right-radius: 6px;
 }
 
-.card-footer{
+.card-footer {
   background: transparent;
-  border-top: 1px solid rgba(0,0,0,.06);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
   padding: 1.1rem 1.25rem;
 }
 
-.bg-dark{
-  .card-footer{
-    border-top: 1px solid rgba(255,255,255,.06);
+.bg-dark {
+  .card-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
   }
 }
 
@@ -124,7 +124,7 @@
 
 // list group
 
-.list-group-item{
+.list-group-item {
   border-color: $border-color;
   color: $gray-dark;
   padding: 1.3rem 1.25rem;
@@ -132,7 +132,7 @@
 
 // badge
 
-.badge{
+.badge {
   position: relative;
   bottom: 1px;
 }
@@ -143,22 +143,23 @@
   .modal-body {
     padding: 2.5rem;
   }
-  .modal-content{
+  .modal-content {
     border: none;
   }
   .modal-header {
     padding: 1rem;
     .close {
-      padding: .5rem 1rem;
+      padding: 0.5rem 1rem;
     }
   }
 }
 
-.modal-body{
+.modal-body {
   padding: 1.8rem;
 }
 
-.modal-header, .modal-footer{
+.modal-header,
+.modal-footer {
   padding: 1rem 1.8rem;
 }
 
@@ -179,22 +180,22 @@
   line-height: 50px;
   opacity: 1;
   text-shadow: none;
-  &:hover{
+  &:hover {
     background: $primary-color;
     color: $white;
     opacity: 1;
   }
 }
 
-
-@media (min-width: 576px){
+@media (min-width: 576px) {
   .modal-dialog {
     max-width: 600px;
   }
 }
 
-@media (min-width: 992px){
-  .modal-lg, .modal-xl {
+@media (min-width: 992px) {
+  .modal-lg,
+  .modal-xl {
     max-width: 800px;
   }
 }

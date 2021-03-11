@@ -3,15 +3,15 @@ list group
 ------------------------------------*/
 
 .list-group-right-arrow {
-  a{
+  a {
     position: relative;
-    &:after{
-      font-family: 'fontawesome';
+    &:after {
+      font-family: "fontawesome";
       font-size: 14px;
       position: absolute;
       top: 30%;
       right: 20px;
-      content: '\f105';
+      content: "\f105";
       width: 25px;
       height: 25px;
       line-height: 23px;
@@ -20,20 +20,20 @@ list group
       border: 1px solid $border-color;
       padding-left: 2px;
     }
-    &:hover{
-      &:after{
+    &:hover {
+      &:after {
         background: $primary-color;
         border-color: $primary-color;
         color: $white;
-        transition: all .3s;
+        transition: all 0.3s;
       }
     }
   }
-  .list-group-item.active{
+  .list-group-item.active {
     background: $white;
     border-color: $border-color;
     color: $primary-color;
-    &:after{
+    &:after {
       background: $primary-color;
       border-color: $primary-color;
       color: $white;
@@ -42,8 +42,8 @@ list group
 }
 
 .list-group-right-arrow-on-hover {
-  a{
-    &:after{
+  a {
+    &:after {
       opacity: 0;
       right: 13px;
       top: 33%;
@@ -52,8 +52,8 @@ list group
       height: 30px;
       line-height: 25px;
     }
-    &:hover{
-      &:after{
+    &:hover {
+      &:after {
         opacity: 1;
         right: -13px;
         border: 3px solid $white;
@@ -63,8 +63,8 @@ list group
       }
     }
   }
-  .list-group-item.active{
-    &:after{
+  .list-group-item.active {
+    &:after {
       opacity: 1;
       right: -13px;
       border: 3px solid $white;
@@ -76,12 +76,12 @@ list group
 }
 
 .list-group {
-  .list-group-item{
-    h6{
+  .list-group-item {
+    h6 {
       color: $dark;
     }
-    &:hover{
-      h6{
+    &:hover {
+      h6 {
         color: $primary-color;
       }
     }
@@ -89,7 +89,7 @@ list group
 }
 
 .list-group-gap {
-  .list-group-item{
+  .list-group-item {
     margin-bottom: 10px;
     border-radius: 6px;
     padding: 1.8rem 1.25rem;
@@ -101,11 +101,11 @@ list group
 .custom-list {
   list-style: none;
   padding: 0;
-  li{
-    padding: .8rem 0;
-    a{
+  li {
+    padding: 0.8rem 0;
+    a {
       color: $dark;
-      &:hover{
+      &:hover {
         color: $primary-color;
         text-decoration: none;
       }
@@ -114,10 +114,10 @@ list group
 }
 
 .custom-list-border {
-  li{
+  li {
     border-bottom: 1px solid $border-color;
   }
-  li:first-child{
+  li:first-child {
     border-top: 1px solid $border-color;
   }
 }

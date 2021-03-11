@@ -3,9 +3,9 @@ accordion
 ------------------------------------*/
 
 .accordion {
-  .card{
+  .card {
     border-color: $border-color;
-    p{
+    p {
       color: $gray-dark;
     }
   }
@@ -13,8 +13,8 @@ accordion
   .card-header {
     padding: 0;
     border-color: $border-color;
-    h6{
-      font:{
+    h6 {
+      font: {
         size: 16px;
         weight: normal;
       }
@@ -28,31 +28,30 @@ accordion
       border-radius: 4px 4px 0 0;
       background: #fff;
       color: $primary-color;
-      &:hover{
+      &:hover {
         color: $primary-color;
       }
     }
-    .collapsed{
+    .collapsed {
       color: $dark;
       &:after {
-        content: '\e943';
+        content: "\e943";
       }
     }
   }
 
-  .accordion-list{
+  .accordion-list {
     list-style: none;
-    li{
-      margin-bottom: .5rem;
-      a{
+    li {
+      margin-bottom: 0.5rem;
+      a {
         color: $gray-dark;
-        i{
+        i {
           font-size: 14px;
         }
-        &:hover{
+        &:hover {
           color: $primary-color;
           text-decoration: none;
-
         }
       }
     }
@@ -65,27 +64,26 @@ accordion
     a {
       background: #fff;
       color: $primary-color;
-      &:hover{
+      &:hover {
         color: $primary-color;
         &:after {
           border: 1px solid $primary-color;
           background: $primary-color;
           color: $white;
-          transition: all .3s;
+          transition: all 0.3s;
         }
       }
     }
-    .collapsed{
+    .collapsed {
       color: $dark;
       &:after {
-        content: '\e943';
+        content: "\e943";
         border: 1px solid $gray;
         background: $white;
         color: $gray-dark;
       }
     }
   }
-
 }
 
 //accordion style 2
@@ -97,44 +95,45 @@ accordion
       margin-bottom: 0px;
       border: none;
       background: transparent;
-      a{
+      a {
         &:after {
-          font:{
+          font: {
             size: 14px;
-            family: 'fontawesome';
+            family: "fontawesome";
           }
           position: absolute;
           top: 35%;
           right: 20px;
-          content: '\f107';
+          content: "\f107";
         }
       }
       a.collapsed {
         position: relative;
         border-radius: 4px;
         &:after {
-          content: '\f105';
+          content: "\f105";
         }
       }
     }
   }
-  .card:not(:first-of-type):not(:last-of-type){
+  .card:not(:first-of-type):not(:last-of-type) {
     border-radius: 4px;
   }
   .card:first-of-type,
   .card:not(:first-of-type):not(:last-of-type) {
-    border-bottom: 1px solid $border-color ;
+    border-bottom: 1px solid $border-color;
   }
-
 }
 
 //accordion style 3
 .accordion.accordion-style-3 {
-  .card, .card-header, .card-header a {
+  .card,
+  .card-header,
+  .card-header a {
     border: none;
     background: transparent;
   }
-  .card-header{
+  .card-header {
     a {
       padding: 1.2rem 0 1.2rem 4rem;
       color: $primary-color;
@@ -146,23 +145,23 @@ accordion
         background: $primary-color;
         color: $white;
         border-radius: 50%;
-        font:{
+        font: {
           size: 14px;
-          family: 'fontawesome';
+          family: "fontawesome";
         }
         position: absolute;
         top: 8px;
         left: 5px;
-        content: '\f107';
+        content: "\f107";
       }
-      &:after{
-        content: '';
+      &:after {
+        content: "";
       }
     }
-    .collapsed{
+    .collapsed {
       color: $dark;
       &:before {
-        content: '\f105';
+        content: "\f105";
         width: 40px;
         height: 40px;
         line-height: 38px;
@@ -176,7 +175,7 @@ accordion
     }
   }
 
-  .card-body{
+  .card-body {
     padding: 1.25rem 0 1.25rem 4rem;
   }
 }
@@ -192,7 +191,7 @@ accordion
       border: none;
       background: transparent;
       position: relative;
-      a{
+      a {
         color: $dark;
         padding: 2.5rem 1.5rem;
         font-weight: bold;
@@ -200,26 +199,25 @@ accordion
       a.collapsed {
         position: relative;
         border-radius: 4px;
-        &:after{
-          content: '\e942';
+        &:after {
+          content: "\e942";
         }
       }
-      i{
+      i {
         position: absolute;
         top: 28px;
         color: $primary-color;
       }
-      span{
+      span {
         padding-left: 3rem;
       }
     }
   }
-  .card:not(:first-of-type):not(:last-of-type){
+  .card:not(:first-of-type):not(:last-of-type) {
     border-radius: 4px;
   }
   .card:first-of-type,
   .card:not(:first-of-type):not(:last-of-type) {
-    border-bottom: 1px solid $border-color ;
+    border-bottom: 1px solid $border-color;
   }
-
 }
