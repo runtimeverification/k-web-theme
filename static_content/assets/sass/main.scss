@@ -1105,7 +1105,7 @@ video.modal-content {
       border: 1px solid $dark-mode-border-color;
 
       pre[class*="language-"] {
-        background-color: darken($color: $dark-mode-canvas-color, $amount: 7%);
+        background-color: #1d1f21;
       }
     }
   }
@@ -1140,7 +1140,7 @@ pre {
   pre[class*="language-"],
   pre {
     color: $dark-mode-code-block-fg;
-    background-color: darken($color: $dark-mode-canvas-color, $amount: 7%);
+    background-color: #1d1f21;
   }
 }
 
