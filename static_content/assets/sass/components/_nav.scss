@@ -78,5 +78,6 @@
   @media screen and (prefers-color-scheme: dark) {
     color: $dark-mode-fg;
     background-color: $dark-mode-bg;
+    box-shadow: 0 1px 10px rgb(151 164 175 / 15%);
   }
 }
