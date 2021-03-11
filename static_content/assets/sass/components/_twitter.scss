@@ -6,20 +6,20 @@ twitter feed
   background: $white;
   border: 1px solid $canvas-color;
   position: relative;
-  &:after{
+  &:after {
     content: "\f099";
-    font-family: 'FontAwesome';
+    font-family: "FontAwesome";
     font-size: 24px;
     color: $gray-light;
     position: absolute;
     top: 1rem;
     right: 1.5rem;
   }
-  ul{
+  ul {
     list-style: none;
     padding: 0;
     margin-bottom: 0;
-    li{
+    li {
       overflow: hidden;
       padding: 2rem;
       position: relative;
@@ -40,10 +40,10 @@ twitter feed
       top: 10%;
       left: 18%;
       margin-left: 1.3rem;
-      a{
+      a {
         text-decoration: none;
       }
-      span{
+      span {
         display: block;
       }
       [data-scribe="element:name"] {
@@ -62,7 +62,7 @@ twitter feed
     margin-bottom: 0.46428571em;
     color: $gray-dark;
     word-break: break-all;
-    a{
+    a {
       margin: 0 3px;
     }
   }
@@ -71,10 +71,10 @@ twitter feed
     width: 82%;
     float: right;
   }
-  .timePosted{
+  .timePosted {
     margin-bottom: 0;
     font-size: 14px;
-    a{
+    a {
       color: $gray-dark;
     }
   }
@@ -84,14 +84,13 @@ twitter feed
 }
 
 .twitter-feed-alt {
-  .user [data-scribe='component:author']{
+  .user [data-scribe="component:author"] {
     display: none;
   }
-  .tweet{
+  .tweet {
     margin-top: 0;
   }
-  &:after{
-    content: '';
+  &:after {
+    content: "";
   }
 }
-

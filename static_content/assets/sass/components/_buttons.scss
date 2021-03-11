@@ -2,49 +2,49 @@
 buttons
 ------------------------------------*/
 
-.btn{
-  padding: .750rem 2rem;
+.btn {
+  padding: 0.75rem 2rem;
   text-transform: uppercase;
-  font:{
+  font: {
     size: 11px;
     weight: bold;
-  };
+  }
   white-space: nowrap;
 }
 
-.btn.btn-sm{
-  padding: .485rem 1.2rem;
+.btn.btn-sm {
+  padding: 0.485rem 1.2rem;
   line-height: 1.6;
-  font:{
+  font: {
     size: 10px;
     weight: bold;
-  };
+  }
 }
 
-.btn.btn-lg{
-  padding: .965rem 2rem;
+.btn.btn-lg {
+  padding: 0.965rem 2rem;
 }
 
-.btn-pill{
+.btn-pill {
   border-radius: 5rem;
 }
 
-.btn-theme{
+.btn-theme {
   background: $primary-color;
   border: 2px solid $primary-color;
   color: $white !important;
-  &:hover{
+  &:hover {
     background: $primary-color-dark;
     color: $white;
     border: 2px solid $primary-color-dark;
   }
 }
 
-.btn-rv-blue{
+.btn-rv-blue {
   background: $rv-blue;
   border: 2px solid $rv-blue;
   color: $white !important;
-  &:hover{
+  &:hover {
     background: $rv-blue-dark;
     color: $white;
     border: 2px solid $rv-blue-dark;
@@ -57,20 +57,20 @@ buttons
   background: $white;
   color: $dark;
   margin-left: 2em;
-  &:hover{
+  &:hover {
     background: $dark;
     color: $white !important;
     border-color: $dark;
   }
 
   @media screen and (prefers-color-scheme: dark) {
-      background: $dark-mode-bg;
-      color: $dark-mode-fg;
-      border-color: $dark-mode-gray-light;
+    background: $dark-mode-bg;
+    color: $dark-mode-fg;
+    border-color: $dark-mode-gray-light;
 
-      &:hover {
-        border-color: $dark-mode-gray-darker;
-      }
+    &:hover {
+      border-color: $dark-mode-gray-darker;
+    }
   }
 }
 
@@ -78,7 +78,7 @@ buttons
   border: 2px solid $dark;
   background: transparent;
   color: $dark;
-  &:hover{
+  &:hover {
     background: $dark;
     color: $white;
     border-color: $dark;
@@ -89,7 +89,7 @@ buttons
   border: 2px solid $white;
   background: transparent;
   color: $white;
-  &:hover{
+  &:hover {
     background: $white;
     color: $dark;
     border-color: $white;
@@ -100,7 +100,7 @@ buttons
   border: 2px solid $white;
   background: $white;
   color: $dark;
-  &:hover{
+  &:hover {
     background: $primary-color;
     color: $white;
     border-color: $primary-color;
@@ -111,19 +111,20 @@ buttons
   border: 2px solid $dark;
   background: $dark;
   color: $white;
-  &:hover{
+  &:hover {
     background: $primary-color;
     color: $white;
     border-color: $primary-color;
   }
 }
 
-.video-btn{
-  .video-play-icon, span{
+.video-btn {
+  .video-play-icon,
+  span {
     display: inline-block;
   }
 
-  .video-play-icon{
+  .video-play-icon {
     width: 46px;
     height: 46px;
     line-height: 46px;
@@ -133,29 +134,28 @@ buttons
     color: $dark;
     cursor: pointer;
     box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.05);
-    i{
+    i {
       position: relative;
       top: 0;
       left: 2px;
       font-size: 12px;
     }
-    &:hover{
-      i{
+    &:hover {
+      i {
         color: $primary-color;
       }
     }
   }
-  span{
+  span {
     position: relative;
     left: 10px;
-    font:{
+    font: {
       size: 11px;
       weight: bold;
-    };
+    }
     text-transform: uppercase;
   }
 }
-
 
 .video-play-btn-align-center {
   position: absolute;
@@ -167,26 +167,24 @@ buttons
 .btn-read-more {
   display: inline-block;
   position: relative;
-  &:hover{
+  &:hover {
     text-decoration: none;
-    &:after{
+    &:after {
       right: -30px;
     }
   }
 }
 
 @media (max-width: 767px) {
-
   .btn.btn-sm {
-    padding: .4rem 1rem;
+    padding: 0.4rem 1rem;
   }
 
-  .btn{
-    padding: .50rem 1.3rem;
+  .btn {
+    padding: 0.5rem 1.3rem;
   }
 
   .btn.btn-lg {
-    padding: .7rem 1.4rem;
+    padding: 0.7rem 1.4rem;
   }
-
 }

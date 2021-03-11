@@ -6,12 +6,12 @@ floating kit
   position: fixed;
   left: 3%;
   top: 40%;
-  a{
+  a {
     text-decoration: none;
     color: $dark;
     display: block;
     margin-bottom: 1.5rem;
-    &:hover{
+    &:hover {
       color: $primary-color;
     }
   }
@@ -22,22 +22,22 @@ floating kit
   right: 0%;
   top: 70%;
   transform: translateX(30%) rotate(-90deg);
-  a{
-    margin-left: .5rem;
+  a {
+    margin-left: 0.5rem;
     color: $dark;
     text-decoration: none;
-    &:hover{
+    &:hover {
       color: $primary-color;
     }
   }
-  span{
+  span {
     color: $gray;
   }
 }
 
-
 @media (max-width: 1249px) {
-  .floating-search-wrap, .floating-social-link {
+  .floating-search-wrap,
+  .floating-social-link {
     display: none;
   }
 }

@@ -24,11 +24,11 @@ steps
     width: 100px;
   }
 
-  i{
+  i {
     line-height: 150px;
   }
 
-  .step-number{
+  .step-number {
     line-height: normal;
     position: absolute;
     top: 10px;
@@ -45,22 +45,21 @@ steps
 
 .steps-solid.step-last,
 .steps-dashed.step-last,
-.steps-dashed-light.step-last{
-  &:after{
+.steps-dashed-light.step-last {
+  &:after {
     border-bottom: none;
   }
 }
 
-.steps-dashed{
+.steps-dashed {
   border: 2px dashed $gray;
   background: transparent;
 }
 
-
-.steps-dashed-light{
+.steps-dashed-light {
   border: 2px dashed $white;
   background: transparent;
-  i{
+  i {
     color: $white;
   }
   &:after {
@@ -68,7 +67,7 @@ steps
   }
 }
 
-.steps-dashed-light + .steps-info{
+.steps-dashed-light + .steps-info {
   color: $white;
 }
 
@@ -79,7 +78,7 @@ steps
 @media (max-width: 1024px) {
   .steps-solid,
   .steps-dashed,
-  .steps-dashed-light{
+  .steps-dashed-light {
     &:after {
       top: 50%;
       right: -110%;
@@ -91,7 +90,7 @@ steps
 @media (max-width: 991px) {
   .steps-solid,
   .steps-dashed,
-  .steps-dashed-light{
+  .steps-dashed-light {
     &:after {
       right: -60%;
       width: 55%;
@@ -102,23 +101,22 @@ steps
 @media (max-width: 767px) {
   .steps-solid,
   .steps-dashed,
-  .steps-dashed-light{
+  .steps-dashed-light {
     width: 100px;
     height: 100px;
     line-height: 100px;
-    i{
+    i {
       line-height: 100px;
     }
     &:after {
       border-bottom: none;
     }
-    .step-number{
+    .step-number {
       right: -15px;
     }
   }
 
-  .steps-info{
+  .steps-info {
     margin-bottom: 2rem;
   }
-
 }
