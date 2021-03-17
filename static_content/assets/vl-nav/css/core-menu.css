@@ -312,6 +312,13 @@ input[type=checkbox] {width: auto; height: auto; margin-right: 10px; float: left
 
 .vl-btn {padding: 10px 20px; border: none}
 
+@media (max-width: 1480px) {
+    #blog-menu > ul {
+        right: -100px;
+    }
+}
+
+
 /*------------------------------------
     responsive
 ------------------------------------*/
@@ -413,5 +420,7 @@ input[type=checkbox] {width: auto; height: auto; margin-right: 10px; float: left
     .nav-btn .bars:before, .nav-btn .bars:after{ position: absolute; content: ''; display: inline-block; width: 30px; height: 2px; top: -8px; background-color: #333;}
 
     .nav-btn .bars:after { top: 8px; }
+
+    #blog-menu > ul { right: 0; }
 
 }
