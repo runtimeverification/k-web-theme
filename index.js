@@ -61,7 +61,7 @@ function generateOutputWebpage({
   sourceHTML,
   includeFileBasePath,
   websiteDirectory,
-  websiteOrigin,
+  websiteOrigin = "",
   targetFilePath,
   variables = {},
 }) {
@@ -73,17 +73,23 @@ function generateOutputWebpage({
   const relative = path.relative(dirname, websiteDirectory);
 
   // Set default variables values
+  let pageURL =
+    websiteOrigin.replace(/\/+$/, "") +
+    "/" +
+    path.relative(
+      websiteDirectory,
+      filePath.endsWith("/index.html") ? dirname : filePath
+    );
+  if (!pageURL.endsWith(".html")) {
+    pageURL = (pageURL + "/").replace(/\/+$/, "/");
+  }
+
   variables = Object.assign(
     {
       YEAR: new Date().getFullYear(),
       WEBSITE_FOOTER: websiteFooter,
       WEBSITE_ORIGIN: websiteOrigin,
-      PAGE_URL: (
-        websiteOrigin.replace(/\/$/, "") +
-        "/" +
-        path.relative(websiteDirectory, dirname) +
-        "/"
-      ).replace(/\/+$/, "/"),
+      PAGE_URL: pageURL,
     },
     variables
   );
