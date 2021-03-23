@@ -53,6 +53,7 @@ const regexp = /{{(.*)}}/;
  * @param {string} options.sourceHTML the HTML content
  * @param {string} options.includeFileBasePath this is the base path of {{include/file.html}}
  * @param {string} options.websiteDirectory the website base directory
+ * @param {string} options.websiteOrigin the website hostname. For example: "https://runtimeverification.com"
  * @param {string} options.targetFilePath the output HTML file path
  * @param {object} options.variables variables map
  */
@@ -60,24 +61,38 @@ function generateOutputWebpage({
   sourceHTML,
   includeFileBasePath,
   websiteDirectory,
+  websiteOrigin = "",
   targetFilePath,
   variables = {},
 }) {
-  // Set default variables values
-  variables = Object.assign(
-    {
-      YEAR: new Date().getFullYear(),
-      WEBSITE_FOOTER: websiteFooter,
-    },
-    variables
-  );
-
   const filePath = targetFilePath;
   const dirname = path.dirname(filePath);
 
   if (!fs.existsSync(dirname)) fs.mkdirSync(dirname, { recursive: true });
 
   const relative = path.relative(dirname, websiteDirectory);
+
+  // Set default variables values
+  let pageURL =
+    websiteOrigin.replace(/\/+$/, "") +
+    "/" +
+    path.relative(
+      websiteDirectory,
+      filePath.endsWith("/index.html") ? dirname : filePath
+    );
+  if (!pageURL.endsWith(".html")) {
+    pageURL = (pageURL + "/").replace(/\/+$/, "/");
+  }
+
+  variables = Object.assign(
+    {
+      YEAR: new Date().getFullYear(),
+      WEBSITE_FOOTER: websiteFooter,
+      WEBSITE_ORIGIN: websiteOrigin,
+      PAGE_URL: pageURL,
+    },
+    variables
+  );
 
   const resultHTML = sourceHTML
     .split("\n")
@@ -119,6 +134,7 @@ function generateOutputWebpage({
  * @param {string} options.websiteDirectory the website base directory
  * @param {string} options.template the webpage template
  * @param {string} options.includeFileBasePath this is the base path of {{include/file.html}}
+ * @param {string} options.websiteOrigin the website hostname. For example: "https://runtimeverification.com"
  */
 function generatePagesFromMarkdownFiles({
   globPattern,
@@ -129,6 +145,7 @@ function generatePagesFromMarkdownFiles({
   websiteDirectory,
   template = "",
   includeFileBasePath,
+  websiteOrigin = "",
 }) {
   const files = glob.sync(globPattern, globOptions);
   for (let i = 0; i < files.length; i++) {
@@ -214,6 +231,7 @@ function generatePagesFromMarkdownFiles({
         MARKDOWN_HTML: $.html(),
       },
       includeFileBasePath,
+      websiteOrigin,
     });
   }
 }
@@ -240,11 +258,13 @@ function cleanUpFiles(dirPath) {
  * @param {string} options.websiteOrigin the website origin
  * @param {string} options.websiteDirectory where the website folder is located
  * @param {string} options.sitemapPath where to save the sitemap.xml
+ * @param {(url: string)=> boolean} options.ignore
  */
 async function buildSitemap({
   websiteOrigin = "http://127.0.0.1:8080/",
   websiteDirectory = "./public_content/",
   sitemapPath = "",
+  ignore = null,
 }) {
   if (!sitemapPath) {
     sitemapPath = path.join(websiteDirectory, "./sitemap.xml");
@@ -264,6 +284,7 @@ async function buildSitemap({
     filepath: filePath,
     lastMod: true,
     changeFreq: "monthly",
+    ignore,
   });
 
   generator.on("add", (url) => {
