@@ -46,6 +46,12 @@ const websiteFooter = fs
   .readFileSync(path.resolve(__dirname, "./static_content/html/footer.html"))
   .toString("utf-8")
   .replace(/{{\$YEAR}}/gi, new Date().getFullYear());
+const rvsiteFooter = fs
+  .readFileSync(
+    path.resolve(__dirname, "./static_content/html/rvsite_footer.html")
+  )
+  .toString("utf-8")
+  .replace(/{{\$YEAR}}/gi, new Date().getFullYear());
 const regexp = /{{(.*)}}/;
 
 /**
@@ -89,6 +95,7 @@ function generateOutputWebpage({
       YEAR: new Date().getFullYear(),
       WEBSITE_FOOTER: websiteFooter,
       WEBSITE_ORIGIN: websiteOrigin,
+      RVSITE_FOOTER: rvsiteFooter,
       PAGE_URL: pageURL,
     },
     variables
