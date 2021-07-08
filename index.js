@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const MarkdownIt = require("markdown-it");
+const toc = require("markdown-toc");
 const glob = require("glob");
 const cheerio = require("cheerio");
 const G = require("glob");
@@ -142,6 +143,7 @@ function generateOutputWebpage({
  * @param {string} options.template the webpage template
  * @param {string} options.includeFileBasePath this is the base path of {{include/file.html}}
  * @param {string} options.websiteOrigin the website hostname. For example: "https://runtimeverification.com"
+ * @param {boolean} options.generateToC variables map
  */
 function generatePagesFromMarkdownFiles({
   globPattern,
@@ -153,6 +155,7 @@ function generatePagesFromMarkdownFiles({
   template = "",
   includeFileBasePath,
   websiteOrigin = "",
+  generateToC = false,
 }) {
   const files = glob.sync(globPattern, globOptions);
   for (let i = 0; i < files.length; i++) {
@@ -176,6 +179,9 @@ function generatePagesFromMarkdownFiles({
       markdown = markdown
         .slice(endFrontMatterOffset + 4)
         .replace(/^[ \t]*\n/, "");
+      if (generateToC) {
+        markdown = toc.insert(markdown)
+      }
       try {
         const frontMatter = YAML.parse(yaml);
         if ("permalink" in frontMatter) {
