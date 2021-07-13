@@ -116,6 +116,10 @@
     text-decoration: none;
   }
 
+  code {
+    color: #e83e8c;
+  }
+
   @media screen and (prefers-color-scheme: dark) {
     color: $dark-mode-fg;
     &:hover {
