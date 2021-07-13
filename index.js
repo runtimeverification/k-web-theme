@@ -305,10 +305,11 @@ function generatePagesFromMarkdownFiles({
           const marginStyle = `margin-left: ${
             (headerData.level - smallestLevel) * 8
           }px;`;
+          const paddingStyle = `padding:0.25rem 0;`;
           const tocLinkStyle = `display:inline;padding:0.25rem 0;`;
 
           if (subHeaders.length) {
-            result += `<details style="${marginStyle}" ${
+            result += `<details style="${marginStyle};${paddingStyle}" ${
               headersData.length === smallestLevel ? "open" : ""
             }>
             <summary><a style="${tocLinkStyle}" href="#${
@@ -320,7 +321,7 @@ function generatePagesFromMarkdownFiles({
           </details>
         `;
           } else {
-            result += `<div>
+            result += `<div style="${paddingStyle}">
               <a
                 href="#${headerData.id}"
                 class="bd-toc-link"
