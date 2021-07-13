@@ -340,7 +340,6 @@ ${convertHeadersDataToHTML(
   getSubHeaders(headersData, smallestLevel, 0)
 )}
 </div>
-<hr>
 `;
     }
 
