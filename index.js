@@ -335,7 +335,7 @@ function generatePagesFromMarkdownFiles({
       };
 
       pageToCHtml = `
-<div style="padding-left:1.5rem;">
+<div>
   <div style="padding:0.25rem 0;">
     <strong>On this page</strong>
   </div>

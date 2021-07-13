@@ -36,5 +36,24 @@
         );
       }
     });
+
+    // Page TOC
+    const hidePageToc = () => {
+      $(".page-toc").css("display", "");
+      $("body").css("overflow-y", "auto");
+      $(".page-toc-toggle-btn").text("≣");
+      $(".page-toc a").off("click", hidePageToc);
+    };
+    $(".page-toc-toggle-btn").text("≣");
+    $(".page-toc-toggle-btn").click((event) => {
+      if ($(".page-toc").css("display") === "none") {
+        $(".page-toc").css("display", "block");
+        $("body").css("overflow-y", "hidden");
+        $(".page-toc-toggle-btn").text("x");
+        $(".page-toc a").on("click", hidePageToc);
+      } else {
+        hidePageToc();
+      }
+    });
   });
 })(jQuery);

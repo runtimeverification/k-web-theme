@@ -1310,3 +1310,38 @@ blockquote {
     border-left: 4px solid #474747;
   }
 }
+
+.page-toc {
+  overflow: auto;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  border-right: none;
+
+  @include media-breakpoint-down(sm) {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    overflow: auto;
+    background-color: #fff;
+    height: 100%;
+  }
+}
+
+.page-toc-toggle-btn {
+  display: none;
+  position: fixed;
+  right: 12px;
+  bottom: 12px;
+  padding: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 100%;
+  font-size: 24px;
+  z-index: 3000;
+
+  @include media-breakpoint-down(sm) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
