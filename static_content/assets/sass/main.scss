@@ -1315,6 +1315,7 @@ blockquote {
   overflow: auto;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
   border-right: none;
+  background-color: $bg;
 
   @include media-breakpoint-down(sm) {
     display: none;
@@ -1324,6 +1325,11 @@ blockquote {
     overflow: auto;
     background-color: #fff;
     height: 100%;
+    border: none;
+  }
+
+  @media screen and (prefers-color-scheme: dark) {
+    background: $dark-mode-bg;
   }
 }
 

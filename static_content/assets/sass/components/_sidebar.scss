@@ -99,6 +99,14 @@
 
 .bd-search-docs-toggle {
   color: $gray-900;
+
+  @media screen and (prefers-color-scheme: dark) {
+    color: $dark-mode-gray;
+
+    &:hover {
+      color: $dark-mode-gray-light;
+    }
+  }
 }
 
 .bd-sidenav {
