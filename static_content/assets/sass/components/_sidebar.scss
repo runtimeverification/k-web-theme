@@ -99,6 +99,14 @@
 
 .bd-search-docs-toggle {
   color: $gray-900;
+
+  @media screen and (prefers-color-scheme: dark) {
+    color: $dark-mode-gray;
+
+    &:hover {
+      color: $dark-mode-gray-light;
+    }
+  }
 }
 
 .bd-sidenav {
@@ -114,6 +122,18 @@
   &:hover {
     color: rgba(0, 0, 0, 0.85);
     text-decoration: none;
+  }
+
+  code {
+    color: #e83e8c;
+  }
+
+  &.selected {
+    font-weight: 800;
+    color: $rv-blue;
+    &:hover {
+      color: $rv-blue-dark;
+    }
   }
 
   @media screen and (prefers-color-scheme: dark) {

@@ -227,6 +227,124 @@ function generatePagesFromMarkdownFiles({
       } catch (error) {}
     });
 
+    // Process headers
+    /**
+     * @typedef HeaderData
+     * @type {object}
+     * @property {number} level
+     * @property {string} id
+     * @property {string} html
+     * @property {number} offset
+     */
+
+    /**
+     * @type {HeaderData[]}
+     */
+    const headersData = [];
+    $("h1, h2, h3, h4, h5, h6").each((index, headerElement) => {
+      const tagName = headerElement.tagName;
+      const level = parseInt(tagName.slice(1));
+      const id = $(headerElement).attr("id");
+      const headerHtml = $(headerElement).html();
+      if (id) {
+        const offset = headersData.length;
+        headersData.push({
+          level,
+          id,
+          html: headerHtml,
+          offset,
+        });
+      }
+    });
+    let pageToCHtml = "";
+    if (headersData.length) {
+      let smallestLevel = headersData[0].level;
+      for (let i = 0; i < headersData.length; i++) {
+        if (headersData[i].level < smallestLevel) {
+          smallestLevel = headersData[i].level;
+        }
+      }
+
+      /**
+       * Get list of sub headers
+       * @param {HeaderData[]} headersData
+       * @param {number} expectedLevel
+       * @param {number} startOffset
+       * @returns {HeaderData[]}
+       */
+      const getSubHeaders = (headersData, expectedLevel, startOffset) => {
+        const arr = [];
+        for (let i = startOffset; i < headersData.length; i++) {
+          const headerData = headersData[i];
+          if (headerData.level === expectedLevel) {
+            arr.push(headerData);
+          } else if (headerData.level < expectedLevel) {
+            break;
+          } else {
+            continue;
+          }
+        }
+        return arr;
+      };
+
+      /**
+       * Build the ToC Html
+       * @param {HeaderData[]} allHeadersData
+       * @param {HeaderData[]} headersData
+       */
+      const convertHeadersDataToHTML = (allHeadersData, headersData) => {
+        let result = "";
+        for (let i = 0; i < headersData.length; i++) {
+          const headerData = headersData[i];
+          const subHeaders = getSubHeaders(
+            allHeadersData,
+            headerData.level + 1,
+            headerData.offset + 1
+          );
+
+          const leftIndentStyle = `padding-left: ${
+            (headerData.level - smallestLevel) * 8
+          }px;`;
+          const paddingStyle = `padding:0.25rem 0;`;
+
+          if (subHeaders.length) {
+            result += `<details style="${paddingStyle};${leftIndentStyle}" ${
+              "open" // headersData.length === smallestLevel ? "open" : ""
+            }>
+            <summary class="bd-toc-link-wrapper">
+              <a href="#${headerData.id}" class="bd-toc-link">${
+              headerData.html
+            }</a>
+              </summary>
+            <div>
+              ${convertHeadersDataToHTML(allHeadersData, subHeaders)}
+            </div>
+          </details>
+        `;
+          } else {
+            result += `<div class="bd-toc-link-wrapper" style="${paddingStyle}">
+              <a
+                href="#${headerData.id}"
+                class="bd-toc-link"
+                style="${leftIndentStyle};"
+              >
+                ${headerData.html}
+              </a></div>`;
+          }
+        }
+        return result;
+      };
+
+      pageToCHtml = `
+<div>
+${convertHeadersDataToHTML(
+  headersData,
+  getSubHeaders(headersData, smallestLevel, 0)
+)}
+</div>
+`;
+    }
+
     $("table").addClass("table");
 
     generateOutputWebpage({
@@ -236,6 +354,7 @@ function generatePagesFromMarkdownFiles({
       variables: {
         TITLE: targetFilePath,
         MARKDOWN_HTML: $.html(),
+        PAGE_TOC_HTML: pageToCHtml,
       },
       includeFileBasePath,
       websiteOrigin,
