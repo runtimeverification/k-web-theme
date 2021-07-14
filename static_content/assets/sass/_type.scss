@@ -19,6 +19,7 @@ a {
   color: $primary-color;
   text-decoration: none;
   transition: all 0.3s;
+  word-break: break-word;
   &:hover {
     color: $primary-color-dark;
     text-decoration: none;
@@ -66,6 +67,14 @@ h6,
       color: $primary-color;
       text-decoration: none;
     }
+  }
+
+  // Fix anchor scroll that hide header under top navbar bug
+  @include media-breakpoint-up(sm) {
+    $top-navbar-height: 64px;
+
+    padding-top: $top-navbar-height;
+    margin-top: -$top-navbar-height;
   }
 }
 

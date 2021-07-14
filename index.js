@@ -302,30 +302,31 @@ function generatePagesFromMarkdownFiles({
             headerData.offset + 1
           );
 
-          const marginStyle = `margin-left: ${
+          const leftIndentStyle = `padding-left: ${
             (headerData.level - smallestLevel) * 8
           }px;`;
           const paddingStyle = `padding:0.25rem 0;`;
-          const tocLinkStyle = `display:inline;padding:0.25rem 0;`;
 
           if (subHeaders.length) {
-            result += `<details style="${marginStyle};${paddingStyle}" ${
-              headersData.length === smallestLevel ? "open" : ""
+            result += `<details style="${paddingStyle};${leftIndentStyle}" ${
+              "open" // headersData.length === smallestLevel ? "open" : ""
             }>
-            <summary><a style="${tocLinkStyle}" href="#${
-              headerData.id
-            }" class="bd-toc-link">${headerData.html}</a></summary>
+            <summary class="bd-toc-link-wrapper">
+              <a href="#${headerData.id}" class="bd-toc-link">${
+              headerData.html
+            }</a>
+              </summary>
             <div>
               ${convertHeadersDataToHTML(allHeadersData, subHeaders)}
             </div>
           </details>
         `;
           } else {
-            result += `<div style="${paddingStyle}">
+            result += `<div class="bd-toc-link-wrapper" style="${paddingStyle}">
               <a
                 href="#${headerData.id}"
                 class="bd-toc-link"
-                style="${marginStyle};${tocLinkStyle}"
+                style="${leftIndentStyle};"
               >
                 ${headerData.html}
               </a></div>`;
@@ -336,9 +337,6 @@ function generatePagesFromMarkdownFiles({
 
       pageToCHtml = `
 <div>
-  <div style="padding:0.25rem 0;">
-    <strong>On this page</strong>
-  </div>
 ${convertHeadersDataToHTML(
   headersData,
   getSubHeaders(headersData, smallestLevel, 0)

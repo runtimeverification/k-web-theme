@@ -1331,6 +1331,20 @@ blockquote {
   @media screen and (prefers-color-scheme: dark) {
     background: $dark-mode-bg;
   }
+
+  .bd-toc-link-wrapper {
+    .bd-toc-link {
+      display: inline;
+      padding: 0.25rem 0;
+    }
+
+    &.highlighted {
+      .bd-toc-link {
+        font-weight: 800;
+        color: $rv-blue;
+      }
+    }
+  }
 }
 
 .page-toc-toggle-btn {
