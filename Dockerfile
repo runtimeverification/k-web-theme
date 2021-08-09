@@ -6,14 +6,10 @@ RUN    apt update         \
         curl              \
         git
 
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN    apt-get update               \
     && apt-get upgrade --yes        \
     && apt-get install --yes nodejs
-
-RUN npm install -g yarn psvm spago
-RUN psvm install v0.13.8
-RUN psvm use v0.13.8
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
