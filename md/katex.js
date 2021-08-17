@@ -3,9 +3,9 @@ const MarkdownIt = require("markdown-it");
 
 /**
  * Parse math to svg
- * @param {string} content 
- * @param {boolean} displayMode 
- * @returns 
+ * @param {string} content
+ * @param {boolean} displayMode
+ * @returns
  */
 function parseMath(content, displayMode) {
   if (!content) {
@@ -22,10 +22,10 @@ function parseMath(content, displayMode) {
 }
 
 /**
- * 
- * @param {MarkdownIt} md 
+ *
+ * @param {MarkdownIt} md
  */
-module.exports = function(md) {
+module.exports = function (md) {
   md.inline.ruler.before("escape", "math", (state, silent) => {
     let openTag = null;
     let closeTag = null;
@@ -90,9 +90,6 @@ module.exports = function(md) {
 
   md.renderer.rules.math = (tokens, idx) => {
     const content = tokens[idx] ? tokens[idx].content : null;
-    return parseMath({
-      content,
-      displayMode: (tokens[idx]).displayMode
-    });
+    return parseMath(content, tokens[idx].displayMode);
   };
-}
+};
