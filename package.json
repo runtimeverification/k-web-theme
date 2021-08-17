@@ -38,6 +38,7 @@
     "jquery-countdown": "^2.2.0",
     "jquery-visible": "^1.2.0",
     "jquery.animate-number": "0.0.14",
+    "katex": "^0.13.13",
     "magnific-popup": "^1.1.0",
     "markdown-it": "^12.0.2",
     "markdown-it-anchor": "^6.0.1",
