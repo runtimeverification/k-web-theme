@@ -11,6 +11,7 @@ const express = require("express");
 const SitemapGenerator = require("sitemap-generator");
 const loadLanguages = require("prismjs/components/");
 const YAML = require("yaml");
+const useKaTeX = require("./md/katex");
 loadLanguages();
 const defineK = require("./prismjs/k");
 defineK(Prism);
@@ -41,6 +42,7 @@ const md = new MarkdownIt({
   },
 });
 md.use(require("markdown-it-anchor"));
+useKaTeX(md);
 
 const websiteFooter = fs
   .readFileSync(path.resolve(__dirname, "./static_content/html/footer.html"))
