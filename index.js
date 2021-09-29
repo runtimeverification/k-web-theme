@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const MarkdownIt = require("markdown-it");
+const markdownItAttrs = require("markdown-it-attrs");
 const glob = require("glob");
 const cheerio = require("cheerio");
 const G = require("glob");
@@ -40,6 +41,12 @@ const md = new MarkdownIt({
       );
     }
   },
+});
+md.use(markdownItAttrs, {
+  // optional, these are default options
+  leftDelimiter: "{",
+  rightDelimiter: "}",
+  allowedAttributes: [], // empty array = all attributes are allowed
 });
 md.use(require("markdown-it-anchor"));
 useKaTeX(md);
