@@ -198,7 +198,8 @@ function generatePagesFromMarkdownFiles({
     $("a").each((index, anchorElement) => {
       try {
         let href = $(anchorElement).attr("href");
-        if (href.match(/^(https?|mailto):/)) {
+        if (!href) {
+        } else if (href.match(/^(https?|mailto):/)) {
           $(anchorElement).attr("target", "_blank");
           $(anchorElement).attr("rel", "noopener");
         } else if (href.match(/\.md(#.+?$|$)/)) {
@@ -226,7 +227,42 @@ function generatePagesFromMarkdownFiles({
         } else if (!href.endsWith("/") && !href.startsWith("#")) {
           $(anchorElement).attr("href", url.resolve(origin, href));
         }
-      } catch (error) {}
+      } catch (error) {
+        console.error(error);
+      }
+    });
+
+    // Move relative local images to '${outputDirectory}/assets/img/gh-pages/' directory if necessary
+    $("img").each((index, imageElement) => {
+      try {
+        let imageSrc = $(imageElement).attr("src");
+        if (imageSrc.match(/^\.\.?\//)) {
+          const imagePath = path.resolve(path.dirname(file), imageSrc);
+          if (fs.existsSync(imagePath)) {
+            const ghPagesImageDir = path.resolve(
+              websiteDirectory,
+              "./assets/img/gh-pages"
+            );
+            if (!fs.existsSync(ghPagesImageDir)) {
+              fs.mkdirSync(ghPagesImageDir, { recursive: true });
+            }
+            let targetImagePath = path.resolve(
+              ghPagesImageDir,
+              path.relative(sourceDirectory, imagePath)
+            );
+            console.log(`Copy image from ${imagePath} to ${targetImagePath}`);
+            fs.mkdirSync(path.dirname(targetImagePath), { recursive: true });
+            fs.copyFileSync(imagePath, targetImagePath);
+            $(imageElement).attr(
+              "src",
+              "/assets/img/gh-pages/" +
+                path.relative(ghPagesImageDir, targetImagePath)
+            );
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
     });
 
     // Process headers
@@ -378,6 +414,11 @@ function cleanUpFiles(dirPath) {
       fs.rmdirSync(dirPath, { recursive: true });
     }
   });
+
+  const ghPagesImageDir = path.resolve(dirPath, "./assets/img/gh-pages");
+  if (fs.existsSync(ghPagesImageDir)) {
+    fs.rmdirSync(ghPagesImageDir, { recursive: true });
+  }
 }
 
 /**
