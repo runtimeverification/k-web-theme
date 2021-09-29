@@ -262,7 +262,8 @@ function generatePagesFromMarkdownFiles({
             fs.copyFileSync(imagePath, targetImagePath);
             $(imageElement).attr(
               "src",
-              "/assets/img/gh-pages/" +
+              path.relative(targetFilePath, ghPagesImageDir) +
+                "/" +
                 path.relative(ghPagesImageDir, targetImagePath)
             );
           }
@@ -408,11 +409,11 @@ ${convertHeadersDataToHTML(
 }
 
 /**
- * Clean up the built *.html files in dirPath
+ * Clean up the built *.html and image files in dirPath
  * @param {string} dirPath
  */
 function cleanUpFiles(dirPath) {
-  const files = glob.sync(dirPath + "/**/*.html");
+  const files = glob.sync(dirPath + "/**/*.{html,jpg,jpeg,png,gif}");
   files.forEach((file) => {
     fs.unlinkSync(file);
     const dirPath = path.dirname(file);
@@ -421,11 +422,6 @@ function cleanUpFiles(dirPath) {
       fs.rmdirSync(dirPath, { recursive: true });
     }
   });
-
-  const ghPagesImageDir = path.resolve(dirPath, "./assets/img/gh-pages");
-  if (fs.existsSync(ghPagesImageDir)) {
-    fs.rmdirSync(ghPagesImageDir, { recursive: true });
-  }
 }
 
 /**
