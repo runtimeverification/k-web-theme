@@ -262,7 +262,7 @@ function generatePagesFromMarkdownFiles({
             fs.copyFileSync(imagePath, targetImagePath);
             $(imageElement).attr(
               "src",
-              path.relative(targetFilePath, ghPagesImageDir) +
+              path.relative(path.dirname(targetFilePath), ghPagesImageDir) +
                 "/" +
                 path.relative(ghPagesImageDir, targetImagePath)
             );
