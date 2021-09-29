@@ -24,7 +24,7 @@ defineIELE(Prism);
  */
 const md = new MarkdownIt({
   html: true,
-  linkify: true,
+  linkify: false,
   highlight: function (str, lang) {
     lang = lang
       .trim()
