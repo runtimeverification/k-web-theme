@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const MarkdownIt = require("markdown-it");
+const markdownItAttrs = require("markdown-it-attrs");
 const glob = require("glob");
 const cheerio = require("cheerio");
 const G = require("glob");
@@ -23,7 +24,7 @@ defineIELE(Prism);
  */
 const md = new MarkdownIt({
   html: true,
-  linkify: true,
+  linkify: false,
   highlight: function (str, lang) {
     lang = lang
       .trim()
@@ -40,6 +41,12 @@ const md = new MarkdownIt({
       );
     }
   },
+});
+md.use(markdownItAttrs, {
+  // optional, these are default options
+  leftDelimiter: "{",
+  rightDelimiter: "}",
+  allowedAttributes: [], // empty array = all attributes are allowed
 });
 md.use(require("markdown-it-anchor"));
 useKaTeX(md);
@@ -198,7 +205,8 @@ function generatePagesFromMarkdownFiles({
     $("a").each((index, anchorElement) => {
       try {
         let href = $(anchorElement).attr("href");
-        if (href.match(/^(https?|mailto):/)) {
+        if (!href) {
+        } else if (href.match(/^(https?|mailto):/)) {
           $(anchorElement).attr("target", "_blank");
           $(anchorElement).attr("rel", "noopener");
         } else if (href.match(/\.md(#.+?$|$)/)) {
@@ -226,7 +234,43 @@ function generatePagesFromMarkdownFiles({
         } else if (!href.endsWith("/") && !href.startsWith("#")) {
           $(anchorElement).attr("href", url.resolve(origin, href));
         }
-      } catch (error) {}
+      } catch (error) {
+        console.error(error);
+      }
+    });
+
+    // Move relative local images to '${outputDirectory}/assets/img/gh-pages/' directory if necessary
+    $("img").each((index, imageElement) => {
+      try {
+        let imageSrc = $(imageElement).attr("src");
+        if (imageSrc.match(/^\.\.?\//)) {
+          const imagePath = path.resolve(path.dirname(file), imageSrc);
+          if (fs.existsSync(imagePath)) {
+            const ghPagesImageDir = path.resolve(
+              websiteDirectory,
+              "./assets/img/gh-pages"
+            );
+            if (!fs.existsSync(ghPagesImageDir)) {
+              fs.mkdirSync(ghPagesImageDir, { recursive: true });
+            }
+            let targetImagePath = path.resolve(
+              ghPagesImageDir,
+              path.relative(sourceDirectory, imagePath)
+            );
+            console.log(`Copy image from ${imagePath} to ${targetImagePath}`);
+            fs.mkdirSync(path.dirname(targetImagePath), { recursive: true });
+            fs.copyFileSync(imagePath, targetImagePath);
+            $(imageElement).attr(
+              "src",
+              path.relative(path.dirname(targetFilePath), ghPagesImageDir) +
+                "/" +
+                path.relative(ghPagesImageDir, targetImagePath)
+            );
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
     });
 
     // Process headers
@@ -365,11 +409,11 @@ ${convertHeadersDataToHTML(
 }
 
 /**
- * Clean up the built *.html files in dirPath
+ * Clean up the built *.html and image files in dirPath
  * @param {string} dirPath
  */
 function cleanUpFiles(dirPath) {
-  const files = glob.sync(dirPath + "/**/*.html");
+  const files = glob.sync(dirPath + "/**/*.{html,jpg,jpeg,png,gif}");
   files.forEach((file) => {
     fs.unlinkSync(file);
     const dirPath = path.dirname(file);
