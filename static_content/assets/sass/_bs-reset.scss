@@ -163,6 +163,15 @@
   padding: 1rem 1.8rem;
 }
 
+@media screen and (prefers-color-scheme: dark) {
+  .modal-header {
+    border-bottom-color: $dark-mode-border-color;
+  }
+  .modal-footer {
+    border-top-color: $dark-mode-border-color;
+  }
+}
+
 .modal-image {
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;

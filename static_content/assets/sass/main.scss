@@ -862,6 +862,11 @@ video {
   display: block;
   width: 80%;
   max-width: 1024px;
+
+  @media screen and (prefers-color-scheme: dark) {
+    background-color: $dark-mode-bg;
+    color: $dark-mode-fg;
+  }
 }
 
 video.modal-content {
