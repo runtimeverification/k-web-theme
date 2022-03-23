@@ -120,6 +120,12 @@
   }
 }
 
+@media screen and (prefers-color-scheme: dark) {
+  hr {
+    border-top-color: $dark-mode-border-color;
+  }
+}
+
 .bg-green-light {
   background: #d7f5e3;
 }
