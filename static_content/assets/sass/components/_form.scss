@@ -19,7 +19,7 @@ form
   @media screen and (prefers-color-scheme: dark) {
     color: $dark-mode-fg;
     border-color: $dark-mode-border-color;
-    background-color: darken($color: $dark-mode-canvas-color, $amount: 0.1);
+    background-color: darken($color: $dark-mode-canvas-color, $amount: 8%);
   }
 }
 

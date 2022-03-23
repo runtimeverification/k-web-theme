@@ -864,7 +864,7 @@ video {
   max-width: 1024px;
 
   @media screen and (prefers-color-scheme: dark) {
-    background-color: $dark-mode-bg;
+    background-color: lighten($dark-mode-bg, 8%);
     color: $dark-mode-fg;
   }
 }
@@ -1290,7 +1290,7 @@ h6 a {
   }
 
   @media screen and (prefers-color-scheme: dark) {
-    background-color: lighten($dark-mode-bg, 4);
+    background-color: lighten($dark-mode-bg, 8%);
     color: $dark-mode-fg;
     border-color: $dark-mode-border-color;
   }

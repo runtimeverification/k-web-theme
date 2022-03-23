@@ -307,7 +307,7 @@
   .light-sub-menu li > div {
     box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.1);
     @media screen and (prefers-color-scheme: dark) {
-      background-color: $dark-mode-bg;
+      background-color: lighten($color: $dark-mode-bg, $amount: 8%);
       color: $dark-mode-fg;
     }
   }
