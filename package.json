@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/runtimeverification/k-web-theme#readme",
   "dependencies": {
+    "@shd101wyy/mume": "file:../../../mume",
     "animate.css": "^4.1.1",
     "ansi_up": "^4.0.4",
     "bootstrap": "^4.5.3",

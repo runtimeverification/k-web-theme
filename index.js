@@ -13,6 +13,9 @@ const SitemapGenerator = require("sitemap-generator");
 const loadLanguages = require("prismjs/components/");
 const YAML = require("yaml");
 const useKaTeX = require("./md/katex");
+const mume = require("@shd101wyy/mume");
+const childProcess = require("child_process")
+
 loadLanguages();
 const defineK = require("./prismjs/k");
 defineK(Prism);
@@ -501,8 +504,9 @@ async function buildSitemap({
 /**
  *
  * @param {string} markdown the sidebar toc markdown content
+ * @param {(url:string)=>string} urlConverter
  */
-function convertSidebarToCToHTML(markdown) {
+function convertSidebarToCToHTML(markdown, urlConverter) {
   const html = md.render(markdown);
   const $ = cheerio.load(html);
 
@@ -536,7 +540,47 @@ function convertSidebarToCToHTML(markdown) {
     el.tagName = "div";
   });
 
+  $("a").each((li, el) => {
+    el.attribs.href = urlConverter(el.attribs.href);
+  });
+
   return $.html();
+}
+
+async function buildBook(tocFilePath, projectDirectoryPath) {
+  await mume.init();
+
+  const engine = new mume.MarkdownEngine({
+    filePath: tocFilePath,
+    projectDirectoryPath,
+    config: {
+      previewTheme: "github-light.css",
+      codeBlockTheme: "github.css",
+    },
+  });
+  console.log("Start building HTML");
+  const htmlFilePath = await engine.eBookExport({ fileType: "html" });
+  console.log("Done generating HTML: ", htmlFilePath);
+
+  console.log("Start building EPUB");
+  const epubFilePath = await engine.eBookExport({ fileType: "epub" });
+  console.log("Done generating EPUB: ", epubFilePath);
+
+  console.log("Start building MOBI");
+  const mobiFilePath = await engine.eBookExport({ fileType: "mobi" });
+  console.log("Done generating EPUB: ", mobiFilePath);
+  
+  console.log("Start build PDF");
+  const pdfFilePath = htmlFilePath.replace(/\.html$/, ".pdf");
+  childProcess.execSync(`pandoc ${htmlFilePath} -o ${pdfFilePath} --pdf-engine=xelatex --highlight-style pygments`)
+  console.log("Done generating PDF: ", pdfFilePath);
+
+  return {
+    pdf: pdfFilePath,
+    html: htmlFilePath,
+    epub: epubFilePath,
+    mobi: mobiFilePath,
+  };
 }
 
 module.exports = {
@@ -545,5 +589,6 @@ module.exports = {
   cleanUpFiles,
   buildSitemap,
   convertSidebarToCToHTML,
+  buildBook,
   md,
 };
