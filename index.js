@@ -544,7 +544,7 @@ function convertSidebarToCToHTML(markdown, urlConverter) {
     el.attribs.href = urlConverter(el.attribs.href);
   });
 
-  return $.html();
+  return $.html($ul);
 }
 
 async function buildBook(tocFilePath, projectDirectoryPath) {
