@@ -63,6 +63,10 @@
   @include media-breakpoint-up(xl) {
     flex: 0 1 320px;
   }
+
+  @media (prefers-color-scheme: dark) {
+    border-right-color: $dark-mode-border-color;
+  }
 }
 
 .bd-links {

@@ -162,6 +162,7 @@ function generatePagesFromMarkdownFiles({
   template = "",
   includeFileBasePath,
   websiteOrigin = "",
+  variables = {},
 }) {
   const files = glob.sync(globPattern, globOptions);
   for (let i = 0; i < files.length; i++) {
@@ -397,11 +398,11 @@ ${convertHeadersDataToHTML(
       sourceHTML: template,
       websiteDirectory,
       targetFilePath,
-      variables: {
+      variables: Object.assign(variables, {
         TITLE: targetFilePath,
         MARKDOWN_HTML: $.html(),
         PAGE_TOC_HTML: pageToCHtml,
-      },
+      }),
       includeFileBasePath,
       websiteOrigin,
     });
@@ -497,10 +498,52 @@ async function buildSitemap({
   generator.start();
 }
 
+/**
+ *
+ * @param {string} markdown the sidebar toc markdown content
+ */
+function convertSidebarToCToHTML(markdown) {
+  const html = md.render(markdown);
+  const $ = cheerio.load(html);
+
+  function helper($ul, level) {
+    const leftIndexStyle = `padding-left: ${(level + 1) * 8}px;`;
+    const paddingStyle = `padding:0.25rem 0;`;
+
+    $ul.children().each((index, li) => {
+      const $li = $(li);
+      if (li.children.length === 1) {
+        li.tagName = "div";
+        $li.attr("style", `${paddingStyle};${leftIndexStyle}`);
+      } else {
+        const $details = $("<details></details>");
+        $details.attr("style", `${paddingStyle};${leftIndexStyle}`);
+        const $summary = $("<summary></summary>");
+        const $ul_ = $(li.children.find((c) => c.tagName === "ul"));
+        const $content = helper($ul_, level + 1);
+        $summary.append($(li.children[0]));
+        $details.append($summary);
+        $details.append($content);
+        $li.replaceWith($details);
+      }
+    });
+    return $ul;
+  }
+  const $ul = $("ul").first();
+  helper($ul, 0);
+
+  $("ul").each((i, el) => {
+    el.tagName = "div";
+  });
+
+  return $.html();
+}
+
 module.exports = {
   generateOutputWebpage,
   generatePagesFromMarkdownFiles,
   cleanUpFiles,
   buildSitemap,
+  convertSidebarToCToHTML,
   md,
 };
