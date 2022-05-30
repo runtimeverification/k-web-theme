@@ -573,7 +573,7 @@ async function buildBook(tocFilePath, projectDirectoryPath) {
   const mobiFilePath = await engine.eBookExport({ fileType: "mobi" });
   console.log("Done generating EPUB: ", mobiFilePath);
 
-  console.log("Start build PDF");
+  console.log("Start building PDF");
   const pdfFilePath = htmlFilePath.replace(/\.html$/, ".pdf");
   childProcess.execSync(
     `pandoc ${htmlFilePath} -o ${pdfFilePath} --pdf-engine=xelatex --highlight-style pygments`
