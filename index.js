@@ -14,7 +14,7 @@ const loadLanguages = require("prismjs/components/");
 const YAML = require("yaml");
 const useKaTeX = require("./md/katex");
 const mume = require("@shd101wyy/mume");
-const childProcess = require("child_process")
+const childProcess = require("child_process");
 
 loadLanguages();
 const defineK = require("./prismjs/k");
@@ -130,7 +130,10 @@ function generateOutputWebpage({
         if (variableName === "ROOT") {
           return relative || ".";
         } else if (variableName in variables) {
-          return variables[variableName];
+          return variables[variableName].replace(
+            /{{\$ROOT}}/g,
+            relative || "."
+          );
         } else {
           return _;
         }
@@ -569,10 +572,12 @@ async function buildBook(tocFilePath, projectDirectoryPath) {
   console.log("Start building MOBI");
   const mobiFilePath = await engine.eBookExport({ fileType: "mobi" });
   console.log("Done generating EPUB: ", mobiFilePath);
-  
+
   console.log("Start build PDF");
   const pdfFilePath = htmlFilePath.replace(/\.html$/, ".pdf");
-  childProcess.execSync(`pandoc ${htmlFilePath} -o ${pdfFilePath} --pdf-engine=xelatex --highlight-style pygments`)
+  childProcess.execSync(
+    `pandoc ${htmlFilePath} -o ${pdfFilePath} --pdf-engine=xelatex --highlight-style pygments`
+  );
   console.log("Done generating PDF: ", pdfFilePath);
 
   return {
