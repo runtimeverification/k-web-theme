@@ -112,5 +112,35 @@
         $(tocLink).addClass("selected");
       }
     });
+
+    // Analyze sidebar toc
+    const sidebarToC = document.querySelector(".sidebar-toc");
+    if (sidebarToC) {
+      const anchorElements = sidebarToC.querySelectorAll("a");
+      for (let i = 0; i < anchorElements.length; i++) {
+        const anchorElement = anchorElements[i];
+        if (new URL(anchorElement.href).pathname === window.location.pathname) {
+          anchorElement.classList.add("selected");
+          anchorElement.style.fontWeight = "800";
+
+          // set all parent `details` elements as open
+          let parentElement = anchorElement.parentElement;
+          while (parentElement) {
+            if (parentElement.tagName === "DETAILS") {
+              parentElement.open = true;
+            }
+            parentElement = parentElement.parentElement;
+          }
+
+          if (anchorElement.scrollIntoView) {
+            anchorElement.scrollIntoView({
+              behavior: "smooth",
+              block: "nearest",
+              inline: "start",
+            });
+          }
+        }
+      }
+    }
   });
 })(jQuery);

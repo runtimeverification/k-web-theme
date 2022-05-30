@@ -121,3 +121,11 @@ list group
     border-top: 1px solid $border-color;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  .list-group-item {
+    background-color: darken($color: $dark-mode-canvas-color, $amount: 8%);
+    color: $dark-mode-fg;
+    border-color: $dark-mode-border-color;
+  }
+}

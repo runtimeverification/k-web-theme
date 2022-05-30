@@ -1335,6 +1335,7 @@ blockquote {
 
   @media screen and (prefers-color-scheme: dark) {
     background: $dark-mode-bg;
+    border-left-color: $dark-mode-border-color;
   }
 
   .bd-toc-link-wrapper {

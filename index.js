@@ -13,6 +13,9 @@ const SitemapGenerator = require("sitemap-generator");
 const loadLanguages = require("prismjs/components/");
 const YAML = require("yaml");
 const useKaTeX = require("./md/katex");
+const mume = require("@shd101wyy/mume");
+const childProcess = require("child_process");
+
 loadLanguages();
 const defineK = require("./prismjs/k");
 defineK(Prism);
@@ -127,7 +130,10 @@ function generateOutputWebpage({
         if (variableName === "ROOT") {
           return relative || ".";
         } else if (variableName in variables) {
-          return variables[variableName];
+          return variables[variableName].replace(
+            /{{\$ROOT}}/g,
+            relative || "."
+          );
         } else {
           return _;
         }
@@ -162,6 +168,7 @@ function generatePagesFromMarkdownFiles({
   template = "",
   includeFileBasePath,
   websiteOrigin = "",
+  variables = {},
 }) {
   const files = glob.sync(globPattern, globOptions);
   for (let i = 0; i < files.length; i++) {
@@ -397,11 +404,11 @@ ${convertHeadersDataToHTML(
       sourceHTML: template,
       websiteDirectory,
       targetFilePath,
-      variables: {
+      variables: Object.assign(variables, {
         TITLE: targetFilePath,
         MARKDOWN_HTML: $.html(),
         PAGE_TOC_HTML: pageToCHtml,
-      },
+      }),
       includeFileBasePath,
       websiteOrigin,
     });
@@ -497,10 +504,96 @@ async function buildSitemap({
   generator.start();
 }
 
+/**
+ *
+ * @param {string} markdown the sidebar toc markdown content
+ * @param {(url:string)=>string} urlConverter
+ */
+function convertSidebarToCToHTML(markdown, urlConverter) {
+  const html = md.render(markdown);
+  const $ = cheerio.load(html);
+
+  function helper($ul, level) {
+    const leftIndexStyle = `padding-left: ${(level + 1) * 8}px;`;
+    const paddingStyle = `padding:0.25rem 0;`;
+
+    $ul.children().each((index, li) => {
+      const $li = $(li);
+      if (li.children.length === 1) {
+        li.tagName = "div";
+        $li.attr("style", `${paddingStyle};${leftIndexStyle}`);
+      } else {
+        const $details = $("<details></details>");
+        $details.attr("style", `${paddingStyle};${leftIndexStyle}`);
+        const $summary = $("<summary></summary>");
+        const $ul_ = $(li.children.find((c) => c.tagName === "ul"));
+        const $content = helper($ul_, level + 1);
+        $summary.append($(li.children[0]));
+        $details.append($summary);
+        $details.append($content);
+        $li.replaceWith($details);
+      }
+    });
+    return $ul;
+  }
+  const $ul = $("ul").first();
+  helper($ul, 0);
+
+  $("ul").each((i, el) => {
+    el.tagName = "div";
+  });
+
+  $("a").each((li, el) => {
+    el.attribs.href = urlConverter(el.attribs.href);
+  });
+
+  return $.html($ul);
+}
+
+async function buildBook(tocFilePath, projectDirectoryPath) {
+  await mume.init();
+
+  const engine = new mume.MarkdownEngine({
+    filePath: tocFilePath,
+    projectDirectoryPath,
+    config: {
+      previewTheme: "github-light.css",
+      codeBlockTheme: "github.css",
+    },
+  });
+  console.log("Start building HTML");
+  const htmlFilePath = await engine.eBookExport({ fileType: "html" });
+  console.log("Done generating HTML: ", htmlFilePath);
+
+  console.log("Start building EPUB");
+  const epubFilePath = await engine.eBookExport({ fileType: "epub" });
+  console.log("Done generating EPUB: ", epubFilePath);
+
+  console.log("Start building MOBI");
+  const mobiFilePath = await engine.eBookExport({ fileType: "mobi" });
+  console.log("Done generating EPUB: ", mobiFilePath);
+
+  console.log("Start building PDF");
+  const pdfFilePath = htmlFilePath.replace(/\.html$/, ".pdf");
+  childProcess.execSync(
+    `pandoc ${htmlFilePath} -o ${pdfFilePath} --pdf-engine=xelatex --highlight-style pygments`
+  );
+  console.log("Done generating PDF: ", pdfFilePath);
+
+  return {
+    pdf: pdfFilePath,
+    html: htmlFilePath,
+    epub: epubFilePath,
+    mobi: mobiFilePath,
+  };
+}
+
 module.exports = {
   generateOutputWebpage,
   generatePagesFromMarkdownFiles,
   cleanUpFiles,
   buildSitemap,
+  convertSidebarToCToHTML,
+  buildBook,
   md,
 };
