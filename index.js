@@ -130,10 +130,14 @@ function generateOutputWebpage({
         if (variableName === "ROOT") {
           return relative || ".";
         } else if (variableName in variables) {
-          return variables[variableName].replace(
-            /{{\$ROOT}}/g,
-            relative || "."
-          );
+          if (typeof variables[variableName] === "string") {
+            return variables[variableName].replace(
+              /{{\$ROOT}}/g,
+              relative || "."
+            );
+          } else {
+            return variables[variableName];
+          }
         } else {
           return _;
         }
