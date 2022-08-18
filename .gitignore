@@ -1,4 +1,5 @@
 node_modules
 public_content
 .cache
+.parcel-cache
 static_content/assets/sass/icons
