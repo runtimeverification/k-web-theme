@@ -20,7 +20,6 @@ loadLanguages();
 const defineK = require("./prismjs/k");
 defineK(Prism);
 const defineIELE = require("./prismjs/iele");
-const { Cheerio } = require("cheerio");
 defineIELE(Prism);
 
 /**
@@ -137,7 +136,7 @@ function generateOutputWebpage({
 
 /**
  *
- * @param {Cheerio} $
+ * @param {cheerio.Root} $
  * @param {boolean} displayCodeBlockSelectors
  */
 function renderCodeBlocks($, displayCodeBlockSelectors) {
