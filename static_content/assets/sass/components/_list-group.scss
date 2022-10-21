@@ -96,6 +96,14 @@ list group
   }
 }
 
+@media (prefers-color-scheme: dark) {
+  .list-group-item {
+    background-color: #1b1b1b;
+    color: $dark-mode-fg;
+    border-color: $dark-mode-border-color;
+  }
+}
+
 // list
 
 .custom-list {
