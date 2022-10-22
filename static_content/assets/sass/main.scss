@@ -420,6 +420,24 @@ a.wizard-link:visited {
   }
 }
 
+.code-block-selectors {
+  padding: 2px 12px;
+  background-color: #e5e5e5;
+  color: $dark-mode-bg;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  width: fit-content;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+@media screen and (prefers-color-scheme: dark) {
+  .code-block-selectors {
+    background-color: $gray-darker;
+    color: $dark-mode-fg;
+  }
+}
+
 .nav-item {
   cursor: pointer;
 }
@@ -508,6 +526,22 @@ a.wizard-link:visited {
     .dropdown-item:hover {
       color: darken($color: $dark-mode-fg, $amount: 24);
     }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .dropdown-menu {
+    background-color: #1b1b1b;
+    color: $dark-mode-fg;
+  }
+
+  .dropdown-item {
+    color: $dark-mode-fg;
+    background-color: #1b1b1b;
+  }
+  .dropdown-item:hover {
+    color: $dark-mode-fg;
+    background-color: $dark-mode-canvas-color;
   }
 }
 

@@ -28,22 +28,6 @@ defineIELE(Prism);
 const md = new MarkdownIt({
   html: true,
   linkify: false,
-  highlight: function (str, lang) {
-    lang = lang
-      .trim()
-      .replace(/^{\.(.+?)}?/, (_, $1) => $1)
-      .trim();
-    try {
-      const html = Prism.highlight(str, Prism.languages[lang], lang);
-      return `<pre class="language-${lang}"><code>` + html + "</code></pre>";
-    } catch (error) {
-      return (
-        '<pre class="language-text"><code>' +
-        md.utils.escapeHtml(str) +
-        "</code></pre>"
-      );
-    }
-  },
 });
 md.use(markdownItAttrs, {
   // optional, these are default options
@@ -151,6 +135,68 @@ function generateOutputWebpage({
 }
 
 /**
+ *
+ * @param {cheerio.Root} $
+ * @param {boolean} displayCodeBlockSelectors
+ */
+function renderCodeBlocks($, displayCodeBlockSelectors) {
+  $("pre code").each((i, block) => {
+    const $block = $(block);
+    const className = $block.attr("class");
+    const appendPreStyle = () => {
+      const $pre = $block.parent();
+      const style = $pre.attr("style");
+      $pre.attr(
+        "style",
+        (style ? `${style};` : "") + "position: relative; padding-top: 32px;"
+      );
+    };
+
+    if (className) {
+      if (className.startsWith("language-")) {
+        const language = className.replace(/^language-/, "");
+        if (Prism.languages[language]) {
+          const html = Prism.highlight(
+            $block.text(),
+            Prism.languages[language],
+            language
+          );
+          $block.html(html);
+        }
+
+        if (displayCodeBlockSelectors) {
+          $block
+            .parent()
+            .prepend(`<div class="code-block-selectors">${language}</div>`);
+          appendPreStyle();
+        }
+      } else if (className.length > 0) {
+        const language = className.split(/\s+/g)[0];
+        if (Prism.languages[language]) {
+          const html = Prism.highlight(
+            $block.text(),
+            Prism.languages[language],
+            language
+          );
+          $block.html(html);
+        }
+
+        if (displayCodeBlockSelectors) {
+          $block.parent().prepend(
+            `<div class="code-block-selectors">${className
+              .split(/\s+/g)
+              .filter((x) => x.length > 0)
+              .map((x) => "." + x)
+              .join(" ")}</div>`
+          );
+          appendPreStyle();
+        }
+      }
+    }
+  });
+}
+
+/**
  * @param {object} options
  * @param {string} options.globPattern which source files to build from
  * @param {G.IOptions} options.globOptions which files to ignore
@@ -161,6 +207,7 @@ function generateOutputWebpage({
  * @param {string} options.template the webpage template
  * @param {string} options.includeFileBasePath this is the base path of {{include/file.html}}
  * @param {string} options.websiteOrigin the website hostname. For example: "https://runtimeverification.com"
+ * @param {boolean} options.displayCodeBlockSelectors whether to display code block selectors
  */
 function generatePagesFromMarkdownFiles({
   globPattern,
@@ -173,6 +220,7 @@ function generatePagesFromMarkdownFiles({
   includeFileBasePath,
   websiteOrigin = "",
   variables = {},
+  displayCodeBlockSelectors = false,
 }) {
   const files = glob.sync(globPattern, globOptions);
   for (let i = 0; i < files.length; i++) {
@@ -211,8 +259,11 @@ function generatePagesFromMarkdownFiles({
     }
     const html = md.render(markdown);
 
-    // Format links
     const $ = cheerio.load(html);
+    // render code blocks
+    renderCodeBlocks($, displayCodeBlockSelectors);
+
+    // Format links
     $("a").each((index, anchorElement) => {
       try {
         let href = $(anchorElement).attr("href");
