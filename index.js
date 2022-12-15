@@ -36,6 +36,7 @@ md.use(markdownItAttrs, {
   allowedAttributes: [], // empty array = all attributes are allowed
 });
 md.use(require("markdown-it-anchor"));
+md.use(require("markdown-it-footnote"));
 useKaTeX(md);
 
 const websiteFooter = fs
@@ -270,7 +271,7 @@ function generatePagesFromMarkdownFiles({
         if (!href) {
         } else if (href.match(/^(https?|mailto):/)) {
           $(anchorElement).attr("target", "_blank");
-          $(anchorElement).attr("rel", "noopener");
+          $(anchorElement).attr("rel", "noreferrer noopener");
         } else if (href.match(/\.md(#.+?$|$)/)) {
           // might be ./README.md or ./README.md#tag
           let hrefTargetFilePath = path.resolve(
@@ -651,4 +652,5 @@ module.exports = {
   convertSidebarToCToHTML,
   buildBook,
   md,
+  renderCodeBlocks,
 };
