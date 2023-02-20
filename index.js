@@ -153,6 +153,30 @@ function renderCodeBlocks($, displayCodeBlockSelectors) {
       );
     };
 
+    const addLineNumbersIfNecessary = () => {
+      if (className && className.indexOf("numberLines") >= 0) {
+        // Add line numbers
+        const $pre = $block.parent();
+        $pre.addClass("line-numbers");
+        $pre.addClass("language-line-numbers"); // language-* in order to apply PrismJS line numbers
+        const start = parseInt($block.attr("startfrom") || "1") || 1;
+        if ($block.attr("startfrom")) {
+          $pre.attr("data-start", $block.attr("startfrom"));
+          $pre.css("counter-reset", `linenumber ${start - 1}`);
+        }
+        const code = $block.text();
+        const match = code.match(/\n(?!$)/g);
+        const lineCount = match ? match.length + 1 : 1;
+        let lines = "";
+        for (let i = 0; i < lineCount; i++) {
+          lines += "<span></span>";
+        }
+        $block.append(
+          `<span aria-hidden="true" class="line-numbers-rows">${lines}</span>`
+        );
+      }
+    };
+
     if (className) {
       if (className.startsWith("language-")) {
         const language = className.replace(/^language-/, "");
@@ -194,6 +218,8 @@ function renderCodeBlocks($, displayCodeBlockSelectors) {
         }
       }
     }
+
+    addLineNumbersIfNecessary();
   });
 }
 
