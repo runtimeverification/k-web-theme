@@ -159,10 +159,13 @@ function renderCodeBlocks($, displayCodeBlockSelectors) {
         const $pre = $block.parent();
         $pre.addClass("line-numbers");
         $pre.addClass("language-line-numbers"); // language-* in order to apply PrismJS line numbers
-        const start = parseInt($block.attr("startfrom") || "1") || 1;
+        let startFrom = parseInt($block.attr("startfrom") || "1");
+        if (Number.isNaN(startFrom)) {
+          startFrom = 1;
+        }
         if ($block.attr("startfrom")) {
           $pre.attr("data-start", $block.attr("startfrom"));
-          $pre.css("counter-reset", `linenumber ${start - 1}`);
+          $pre.css("counter-reset", `linenumber ${startFrom - 1}`);
         }
         const code = $block.text();
         const match = code.match(/\n(?!$)/g);
