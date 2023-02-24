@@ -165,12 +165,14 @@ function renderCodeBlocks($, displayCodeBlockSelectors) {
           const startFrom = parseInt($block.attr("startfrom"));
           if (Number.isNaN(startFrom) || Math.floor(startFrom) !== startFrom) {
             throw new Error(
-              `Invalid startFrom attribute value: ${$block.attr("startFrom")}`
+              `Invalid startFrom attribute value: ${$block.attr("startfrom")}`
             );
           } else {
             $pre.attr("data-start", $block.attr("startfrom"));
             startLineNumber = startFrom;
           }
+        } else {
+          $pre.attr("data-start", "1");
         }
         $pre.css("counter-reset", `linenumber ${startLineNumber - 1}`);
 
