@@ -153,6 +153,42 @@ function renderCodeBlocks($, displayCodeBlockSelectors) {
       );
     };
 
+    const addLineNumbersIfNecessary = () => {
+      if (className && className.indexOf("numberLines") >= 0) {
+        // Add line numbers
+        const $pre = $block.parent();
+        $pre.addClass("line-numbers");
+        $pre.addClass("language-line-numbers"); // language-* in order to apply PrismJS line numbers
+
+        let startLineNumber = 1;
+        if ($block.attr("startfrom")) {
+          const startFrom = parseInt($block.attr("startfrom"));
+          if (Number.isNaN(startFrom) || Math.floor(startFrom) !== startFrom) {
+            throw new Error(
+              `Invalid startFrom attribute value: ${$block.attr("startfrom")}`
+            );
+          } else {
+            $pre.attr("data-start", $block.attr("startfrom"));
+            startLineNumber = startFrom;
+          }
+        } else {
+          $pre.attr("data-start", "1");
+        }
+        $pre.css("counter-reset", `linenumber ${startLineNumber - 1}`);
+
+        const code = $block.text();
+        const match = code.match(/\n(?!$)/g);
+        const lineCount = match ? match.length + 1 : 1;
+        let lines = "";
+        for (let i = 0; i < lineCount; i++) {
+          lines += "<span></span>";
+        }
+        $block.append(
+          `<span aria-hidden="true" class="line-numbers-rows">${lines}</span>`
+        );
+      }
+    };
+
     if (className) {
       if (className.startsWith("language-")) {
         const language = className.replace(/^language-/, "");
@@ -194,6 +230,8 @@ function renderCodeBlocks($, displayCodeBlockSelectors) {
         }
       }
     }
+
+    addLineNumbersIfNecessary();
   });
 }
 

@@ -22,3 +22,5 @@ window.Prism.manual = true;
 
 require("../vl-nav/js/vl-menu.js");
 require("./scripts");
+
+require("../../../prismjs/prism-line-numbers");
