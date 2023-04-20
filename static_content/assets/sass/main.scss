@@ -1177,6 +1177,15 @@ pre {
   overflow: auto;
   font-family: Inconsolata, Monaco, Consolas, "Courier New", Courier, monospace;
 }
+code[class*="language-"] {
+  font-family: Inconsolata, Monaco, Consolas, "Courier New", Courier, monospace;
+}
+pre[class*="language-"] {
+  padding: 1em;
+  margin: 0.5em 0;
+  overflow: auto;
+  border-radius: 0.3em;
+}
 
 @media screen and (prefers-color-scheme: dark) {
   pre[class*="language-"],
