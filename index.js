@@ -255,6 +255,7 @@ function renderCodeBlocks(
  * @param {string} options.includeFileBasePath this is the base path of {{include/file.html}}
  * @param {string} options.websiteOrigin the website hostname. For example: "https://runtimeverification.com"
  * @param {boolean} options.displayCodeBlockSelectors whether to display code block selectors
+ * @param {boolean} options.displayCodeBlockLineNumbers whether to display code block line numbers
  */
 function generatePagesFromMarkdownFiles({
   globPattern,
