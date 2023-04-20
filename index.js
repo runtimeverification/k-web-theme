@@ -139,8 +139,13 @@ function generateOutputWebpage({
  *
  * @param {cheerio.Root} $
  * @param {boolean} displayCodeBlockSelectors
+ * @param {boolean} displayCodeBlockLineNumbers
  */
-function renderCodeBlocks($, displayCodeBlockSelectors) {
+function renderCodeBlocks(
+  $,
+  displayCodeBlockSelectors,
+  displayCodeBlockLineNumbers
+) {
   $("pre code").each((i, block) => {
     const $block = $(block);
     const className = $block.attr("class");
@@ -154,7 +159,10 @@ function renderCodeBlocks($, displayCodeBlockSelectors) {
     };
 
     const addLineNumbersIfNecessary = () => {
-      if (className && className.indexOf("numberLines") >= 0) {
+      if (
+        displayCodeBlockLineNumbers ||
+        (className && className.indexOf("numberLines") >= 0)
+      ) {
         // Add line numbers
         const $pre = $block.parent();
         $pre.addClass("line-numbers");
@@ -260,6 +268,7 @@ function generatePagesFromMarkdownFiles({
   websiteOrigin = "",
   variables = {},
   displayCodeBlockSelectors = false,
+  displayCodeBlockLineNumbers = false,
 }) {
   const files = glob.sync(globPattern, globOptions);
   for (let i = 0; i < files.length; i++) {
@@ -300,7 +309,7 @@ function generatePagesFromMarkdownFiles({
 
     const $ = cheerio.load(html);
     // render code blocks
-    renderCodeBlocks($, displayCodeBlockSelectors);
+    renderCodeBlocks($, displayCodeBlockSelectors, displayCodeBlockLineNumbers);
 
     // Format links
     $("a").each((index, anchorElement) => {
