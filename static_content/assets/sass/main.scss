@@ -1386,6 +1386,7 @@ blockquote {
     .bd-toc-link {
       display: inline;
       padding: 0.25rem 0;
+      white-space: nowrap;
     }
 
     &.highlighted {
