@@ -142,5 +142,47 @@
         }
       }
     }
+
+    // Add link icon to headers with id
+    $("h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]").each(
+      (index, header) => {
+        const $linkIcon = $(
+          `<a class="header-link ml-2" style="font-size:18px" href="#${header.id}"><i class="fas fa-link"></i></a>`
+        );
+        $linkIcon.click((event) => {
+          // Copy link to clipboard
+          const $temp = $("<input>");
+          $("body").append($temp);
+          $temp
+            .val(window.location.href.split("#")[0] + "#" + header.id)
+            .select();
+          document.execCommand("copy");
+          $temp.remove();
+
+          // Show tooltip
+          $linkIcon.tooltip({
+            title: "Link copied!",
+            trigger: "manual",
+            placement: "bottom",
+          });
+          $linkIcon.tooltip("show");
+          setTimeout(() => {
+            $linkIcon.tooltip("hide");
+          }, 1000);
+        });
+
+        // Display the $linkIcon when hovering on the header
+        $linkIcon.hide();
+        $(header).append($linkIcon);
+        $(header).hover(
+          (event) => {
+            $linkIcon.show();
+          },
+          (event) => {
+            $linkIcon.hide();
+          }
+        );
+      }
+    );
   });
 })(jQuery);
