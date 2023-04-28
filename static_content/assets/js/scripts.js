@@ -94,6 +94,38 @@
               currentHighlightedHeaderAnchorElement.parentElement.classList.add(
                 "highlighted"
               );
+
+              // Expand all parent `details` elements
+              let parentElement =
+                currentHighlightedHeaderAnchorElement.parentElement;
+              while (parentElement) {
+                if (parentElement.tagName === "DETAILS") {
+                  if (parentElement.open) {
+                    break;
+                  }
+                  parentElement.open = true;
+                }
+                parentElement = parentElement.parentElement;
+              }
+
+              // Scroll the page toc to the highlighted element
+              // and put the highlighted element in the middle of the page toc
+              const pageToc = document.querySelector(".page-toc");
+              if (pageToc) {
+                const pageTocRect = pageToc.getBoundingClientRect();
+                const currentHighlightedHeaderAnchorElementRect =
+                  currentHighlightedHeaderAnchorElement.getBoundingClientRect();
+                const pageTocScrollTop =
+                  pageToc.scrollTop +
+                  currentHighlightedHeaderAnchorElementRect.top -
+                  pageTocRect.top -
+                  pageTocRect.height / 2 +
+                  currentHighlightedHeaderAnchorElementRect.height / 2;
+                pageToc.scrollTo({
+                  top: pageTocScrollTop,
+                  behavior: "smooth",
+                });
+              }
             }
             break;
           }

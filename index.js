@@ -465,9 +465,7 @@ function generatePagesFromMarkdownFiles({
           const paddingStyle = `padding:0.25rem 0;`;
 
           if (subHeaders.length) {
-            result += `<details style="${paddingStyle};${leftIndentStyle}" ${
-              "open" // headersData.length === smallestLevel ? "open" : ""
-            }>
+            result += `<details style="${paddingStyle};${leftIndentStyle}">
             <summary class="bd-toc-link-wrapper">
               <a href="#${headerData.id}" class="bd-toc-link">${
               headerData.html
