@@ -94,6 +94,38 @@
               currentHighlightedHeaderAnchorElement.parentElement.classList.add(
                 "highlighted"
               );
+
+              // Expand all parent `details` elements
+              let parentElement =
+                currentHighlightedHeaderAnchorElement.parentElement;
+              while (parentElement) {
+                if (parentElement.tagName === "DETAILS") {
+                  if (parentElement.open) {
+                    break;
+                  }
+                  parentElement.open = true;
+                }
+                parentElement = parentElement.parentElement;
+              }
+
+              // Scroll the page toc to the highlighted element
+              // and put the highlighted element in the middle of the page toc
+              const pageToc = document.querySelector(".page-toc");
+              if (pageToc) {
+                const pageTocRect = pageToc.getBoundingClientRect();
+                const currentHighlightedHeaderAnchorElementRect =
+                  currentHighlightedHeaderAnchorElement.getBoundingClientRect();
+                const pageTocScrollTop =
+                  pageToc.scrollTop +
+                  currentHighlightedHeaderAnchorElementRect.top -
+                  pageTocRect.top -
+                  pageTocRect.height / 2 +
+                  currentHighlightedHeaderAnchorElementRect.height / 2;
+                pageToc.scrollTo({
+                  top: pageTocScrollTop,
+                  behavior: "smooth",
+                });
+              }
             }
             break;
           }
@@ -142,5 +174,47 @@
         }
       }
     }
+
+    // Add link icon to headers with id
+    $("h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]").each(
+      (index, header) => {
+        const $linkIcon = $(
+          `<a class="header-link ml-2" style="font-size:18px" href="#${header.id}"><i class="fas fa-link"></i></a>`
+        );
+        $linkIcon.click((event) => {
+          // Copy link to clipboard
+          const $temp = $("<input>");
+          $("body").append($temp);
+          $temp
+            .val(window.location.href.split("#")[0] + "#" + header.id)
+            .select();
+          document.execCommand("copy");
+          $temp.remove();
+
+          // Show tooltip
+          $linkIcon.tooltip({
+            title: "Link copied!",
+            trigger: "manual",
+            placement: "bottom",
+          });
+          $linkIcon.tooltip("show");
+          setTimeout(() => {
+            $linkIcon.tooltip("hide");
+          }, 1000);
+        });
+
+        // Display the $linkIcon when hovering on the header
+        $linkIcon.hide();
+        $(header).append($linkIcon);
+        $(header).hover(
+          (event) => {
+            $linkIcon.show();
+          },
+          (event) => {
+            $linkIcon.hide();
+          }
+        );
+      }
+    );
   });
 })(jQuery);
