@@ -270,6 +270,7 @@ function generatePagesFromMarkdownFiles({
   variables = {},
   displayCodeBlockSelectors = false,
   displayCodeBlockLineNumbers = false,
+  defaultPageTitle = undefined,
 }) {
   const files = glob.sync(globPattern, globOptions);
   for (let i = 0; i < files.length; i++) {
@@ -510,6 +511,7 @@ ${convertHeadersDataToHTML(
         TITLE: targetFilePath,
         MARKDOWN_HTML: $.html(),
         PAGE_TOC_HTML: pageToCHtml,
+        PAGE_TITLE: $("h1").first().text() || defaultPageTitle,
       }),
       includeFileBasePath,
       websiteOrigin,
