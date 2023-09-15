@@ -270,7 +270,6 @@ function generatePagesFromMarkdownFiles({
   variables = {},
   displayCodeBlockSelectors = false,
   displayCodeBlockLineNumbers = false,
-  generatePageTitle = false,
   defaultPageTitle = undefined,
 }) {
   const files = glob.sync(globPattern, globOptions);
@@ -504,11 +503,6 @@ ${convertHeadersDataToHTML(
 
     $("table").addClass("table");
 
-    let pageTitle = undefined;
-    if (generatePageTitle) {
-      pageTitle = $("h1").first().text();
-    }
-
     generateOutputWebpage({
       sourceHTML: template,
       websiteDirectory,
@@ -517,9 +511,7 @@ ${convertHeadersDataToHTML(
         TITLE: targetFilePath,
         MARKDOWN_HTML: $.html(),
         PAGE_TOC_HTML: pageToCHtml,
-        ...(generatePageTitle
-          ? { PAGE_TITLE: pageTitle || defaultPageTitle }
-          : {}),
+        PAGE_TITLE: $("h1").first().text() || defaultPageTitle,
       }),
       includeFileBasePath,
       websiteOrigin,
